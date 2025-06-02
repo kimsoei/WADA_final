@@ -1,0 +1,35 @@
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { ThemeProvider } from "styled-components";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import "./index.css";
+import { theme } from "./styles/theme";
+
+import MainPage from "./page/MainPage";
+import PostPage from "./page/PostPage";
+import PartyPage from "./page/PartyPage";
+import ProfilePage from "./page/ProfilePage";
+import PostWritePage from "./page/PostWritePage";
+import PostViewPage from "./page/PostViewPage";
+
+import AppPreview from "./AppPreview";
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <AppPreview>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/post" element={<PostPage />} />
+            <Route path="/post/write" element={<PostWritePage />} />
+            <Route path="/post/:id" element={<PostViewPage />} />
+            <Route path="/party" element={<PartyPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Routes>
+        </AppPreview>
+      </Router>
+    </ThemeProvider>
+  </StrictMode>
+);
