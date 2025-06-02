@@ -162,3 +162,53 @@ body {
   padding: 48px 20px 12px 20px;
   background-color: #fff;
 }
+
+/* 여기부터 캘린더 라이브러리 스타일용임다! */
+.react-datepicker {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(15, 15, 15, 0.06);
+  background-color: #ffffff;
+}
+
+.react-datepicker__header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+}
+
+.react-datepicker__current-month {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333333;
+}
+
+.react-datepicker__day,
+.react-datepicker__day-name {
+  color: #333333;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 6px;
+  margin: 2px;
+}
+
+.react-datepicker__day:hover {
+  background-color: #f2f2f2;
+}
+
+.react-datepicker__day--selected {
+  background-color: #2f2f2f;
+  color: white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #e0e0e0;
+  color: #333333;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+/* 여기까지 캘린더 스타일링임다! */

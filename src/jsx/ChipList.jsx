@@ -3,6 +3,7 @@ import { SmallChip, MediumChip, LargeChip } from './Chip';
 import styled from 'styled-components';
 
 const ChipCon = styled.div`
+    height:auto;
 `
 
 const Title = styled.p`
@@ -11,13 +12,15 @@ const Title = styled.p`
     color: ${({ theme }) => theme.colors.gray[800]};
 `;
 
+const SubText = styled.p`
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.gray[600]};
+`;
+
+
 const TitleWrap = styled.div`
-    font-size: 18px;
-    font-weight: 700;
-    color: ${({ theme }) => theme.colors.gray[800]};
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
+    display:flex;
+    margin-bottom: 2px;
 `;
 
 const EssentialIcon = styled.img`
@@ -31,6 +34,7 @@ const ChipListWrap = styled.div`
     gap: 8px;
     width: 100%;
     max-width: 402px;
+    margin-top: 12px;
 `;
 
 const sizeToComponent = {
@@ -39,7 +43,7 @@ const sizeToComponent = {
     large: LargeChip,
 };
 
-function ChipList({ title, chips = [], size = 'medium', onChange, unLock = true, max = 3, type ='essential' }) {
+function ChipList({ title, subtext, chips = [], size = 'medium', onChange, unLock = true, max = 3, type ='essential' }) {
     const [selectedChips, setSelectedChips] = useState([]);
     const [touched, setTouched] = useState(false);
     const selected = selectedChips.length > 0;  
@@ -72,6 +76,8 @@ function ChipList({ title, chips = [], size = 'medium', onChange, unLock = true,
                 <Title>{title}</Title>
                 {isEssential && <EssentialIcon src="/essential.svg" alt="필수 입력" />}
         </TitleWrap>
+        
+        {subtext && <SubText>{subtext}</SubText>}
 
         <ChipListWrap>
         {chips.map((label) => (

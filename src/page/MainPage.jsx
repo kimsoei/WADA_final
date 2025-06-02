@@ -6,7 +6,9 @@ import PostList from '../jsx/PostList';
 import BottomNavigation from '../jsx/BottomNavigation';
 
 import Banner from '../jsx/Banner';
-import BottomSheet from '../jsx/BottomSheet';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import {db} from '../firebase.js'
 
 
 const ServiceTip = styled.div`
@@ -25,47 +27,60 @@ const ServiceTip = styled.div`
     margin-bottom: 12px;
 `
 
-const dummyPosts = [
-    {
-        category: '프론트엔드',
-        title: '멋진 웹사이트 함께 만들어요!',
-        date: 1753369200000, // 2025.07.25
-        position: ['프론트엔드', '디자인'],
-        skills: ['React', 'TypeScript', 'Figma'],
-        author: '이지은',
-        viewCount: 98,
-    },
-    {
-        category: '디자인',
-        title: 'UX 디자이너 모집 중입니다!',
-        date: 1753532000000, // 2025.07.27
-        position: ['UX 디자이너'],
-        skills: ['Figma', 'Notion'],
-        author: '박하늘',
-        viewCount: 120,
-    },
-    {
-        category: '기획',
-        title: '아이디어 구상부터 함께할 PM 구해요',
-        date: 1753704800000, // 2025.07.29
-        position: ['기획'],
-        skills: ['Notion', '피그마'],
-        author: '정현우',
-        viewCount: 76,
-    },
-    {
-        category: '백엔드',
-        title: 'Spring Boot로 API 개발 도와주실 분?',
-        date: 1753877600000, // 2025.07.31
-        position: ['백엔드'],
-        skills: ['Spring Boot', 'MySQL', 'Postman'],
-        author: '김민수',
-        viewCount: 143,
-    }
-];
+// const dummyPosts = [
+//     {
+//         category: '프론트엔드',
+//         title: '멋진 웹사이트 함께 만들어요!',
+//         date: 1753369200000, // 2025.07.25
+//         position: ['프론트엔드', '디자인'],
+//         skills: ['React', 'TypeScript', 'Figma'],
+//         author: '이지은',
+//         viewCount: 98,
+//     },
+//     {
+//         category: '디자인',
+//         title: 'UX 디자이너 모집 중입니다!',
+//         date: 1753532000000, // 2025.07.27
+//         position: ['UX 디자이너'],
+//         skills: ['Figma', 'Notion'],
+//         author: '박하늘',
+//         viewCount: 120,
+//     },
+//     {
+//         category: '기획',
+//         title: '아이디어 구상부터 함께할 PM 구해요',
+//         date: 1753704800000, // 2025.07.29
+//         position: ['기획'],
+//         skills: ['Notion', '피그마'],
+//         author: '정현우',
+//         viewCount: 76,
+//     },
+//     {
+//         category: '백엔드',
+//         title: 'Spring Boot로 API 개발 도와주실 분?',
+//         date: 1753877600000, // 2025.07.31
+//         position: ['백엔드'],
+//         skills: ['Spring Boot', 'MySQL', 'Postman'],
+//         author: '김민수',
+//         viewCount: 143,
+//     }
+// ];
 
 export default function MainPage() {
     const navigate = useNavigate();
+        const [posts, setPosts] = useState([]);
+
+    
+    useEffect(() => {
+        let tempData = []
+        db.collection('post').get().then((qs)=>{
+            qs.forEach((doc) => {
+                tempData.push(doc.data())
+            })
+            setPosts(tempData)
+        })
+    },[])
+
 
     return (
         <>
@@ -92,7 +107,7 @@ export default function MainPage() {
                 </div>
             </ServiceTip>
 
-            <Banner type='dark' />
+            <Banner type='dark' onClick={() => navigate('/profile/write')} />
             <Banner type="light" onClick={() => navigate('/post/write')} />
 
             <div className='ConTitleWrap'>
@@ -100,7 +115,7 @@ export default function MainPage() {
                 <div className='ConBtn' onClick={() => navigate('/post')}><span className='allView'>전체보기</span><img className='main_arrow' src='/arrow_right.svg' /></div>
             </div>
 
-            <PostList type="homeList" posts={dummyPosts} />
+            <PostList type="homeList" posts={posts}/>
         </div>
 
         <BottomNavigation />

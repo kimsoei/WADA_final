@@ -7,8 +7,8 @@ const BtnCon = styled.div`
 `
 
 const BtnWrap = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
     width: 100%;
     gap: 6px;
     margin-top: 16px;

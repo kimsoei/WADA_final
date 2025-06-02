@@ -13,14 +13,16 @@ import ActionBtn from '../jsx/ActionBtn';
 import {db} from '../firebase'
 import BottomSheet from '../jsx/BottomSheet';
 import PositionCardList from '../jsx/PositionCardList';
+import DatePicker from '../jsx/DatePicker';
 
 const Scrim = styled.div`
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 402px;
+    height: 874px;
     top: 0;
     left: 0;
+    z-index: 999;
 `
 
 const InfoTextWrap = styled.div`
@@ -82,7 +84,8 @@ export default function PostWritePage() {
         purpose: [],
         status: '',
         description: '',
-        positions: []
+        positions: [],
+        projectDate: []
     });
 
     const isStep1Valid =
@@ -93,7 +96,6 @@ export default function PostWritePage() {
 
     const isStep2Valid = formData.positions.length > 0;
     // recruitdetail??이게 먼지 모르겠어서 일단 포지션카드의 개수로 바꿨으여 positions는 포지션별 데이토에요요
-
     const positionCardLimit = formData.positions.length >= 3;
 
 
@@ -119,6 +121,8 @@ export default function PostWritePage() {
 
     return (
         <>
+            {bottomSheetOpen && (<Scrim onClick={() => setBottomSheetOpen(false)} />)}
+
             <Header type="back" title="모집글 작성" backTo="/post" />
             <div className="white-bg">
                 <ProgressBar step={step} />
@@ -177,6 +181,15 @@ export default function PostWritePage() {
                 />
                 </div>
 
+                <div>
+                <DatePicker
+                    title="프로젝트 기간"
+                    value={formData.projectDate}
+                    onChange={(val) => setFormData({ ...formData, projectDate: val })}
+                >
+                </DatePicker>
+                </div>
+
                 <InputText
                     title="프로젝트 소개"
                     placeholder="프로젝트 상세 정보를 입력해 주세요."
@@ -205,26 +218,24 @@ export default function PostWritePage() {
 
                 <div className="writeActionBtn">
                     <ActionBtn
-                    btnName={step === 2 ? '완료' : '다음'}
-                    onClick={handleNext}
-                    type={step === 1 ? (isStep1Valid ? 'default' : 'disabled') : isStep2Valid ? 'default' : 'disabled'}
-                    />
+                        btnName={step === 2 ? '완료' : '다음'}
+                        onClick={handleNext}
+                        type={step === 1 ? (isStep1Valid ? 'default' : 'disabled') : isStep2Valid ? 'default' : 'disabled'}>
+                    </ActionBtn>
                 </div>
                 
             {bottomSheetOpen && (
                 <>
-                <Scrim onClick={() => setBottomSheetOpen(false)} />
-                <BottomSheet
-                    onClose={() => setBottomSheetOpen(false)}
-                    onAdd={(newPosition) => {
+                    <BottomSheet
+                        onClose={() => setBottomSheetOpen(false)}
+                        onAdd={(newPosition) => {
                             setFormData(prev => ({
                                 ...prev, positions: [...prev.positions, newPosition]
-                            }));
-                        setBottomSheetOpen(false);
-                    }}
-                />
+                        }));
+                            setBottomSheetOpen(false);
+                        }}>
+                    </BottomSheet>
                 </>
-)}
-            </div>
+            )}</div>
             </>
-);}
+        );}

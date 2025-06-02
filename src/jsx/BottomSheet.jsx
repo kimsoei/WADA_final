@@ -20,6 +20,17 @@ const SheetCon = styled.div`
     position: absolute;
     bottom: 0;
     left: 0;
+
+    z-index: 1000;
+
+    transform: translateY(100%);
+        animation: BottomSheet 0.3s ease-out forwards;
+
+    @keyframes BottomSheet {
+        to {
+        transform: translateY(0);
+        }
+    }
 `
 
 const ControllBar = styled.div`
@@ -115,21 +126,21 @@ function BottomSheet( {onAdd, onClose} ){
 
                 <ChipList
                     title="기술 스택"
+                    subtext="최대 3개까지 선택할 수 있어요"
                     chips={stackOptions}
                     size="large"
                     onChange={(selectedStacks) =>
-                    setpartyPosition((prev) => ({
-                    ...prev,
-                    stack: selectedStacks,
-                }))
-                }
+                        setpartyPosition((prev) => ({
+                            ...prev,
+                            stack: selectedStacks,
+                        }))
+                    }
                 />
 
                 <ActionBtn btnName ='추가하기'
                 type={partyPosition.stack.length > 0 ? 'default' : 'disabled'}
                 onClick={() => {onAdd(partyPosition)}}
                 ></ActionBtn>
-            
             </SheetCon>
         </>
     )

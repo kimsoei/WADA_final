@@ -10,7 +10,7 @@ const InputWrap = styled.div`
 `;
 
 const TitleWrap = styled.div`
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     color: ${({ theme }) => theme.colors.gray[800]};
     display: flex;

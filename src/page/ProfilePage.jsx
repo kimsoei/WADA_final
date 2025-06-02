@@ -4,8 +4,11 @@ import styled from 'styled-components';
 import Header from '../jsx/Header';
 import BottomNavigation from '../jsx/BottomNavigation';
 
-
+import {db} from '../firebase'
 import ActionBtn from '../jsx/ActionBtn';
+import ProfileCard from '../jsx/ProfileCard';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const DummyImg = styled.img`
     margin-top: 32px;
@@ -14,6 +17,17 @@ const DummyImg = styled.img`
 
 export default function PartyPage() {
     const navigate = useNavigate();
+    const [profile, setProfile] = useState(null);
+
+    useEffect(() => {
+        db.collection('profile').get().then((qs) => {
+            const data = [];
+            qs.forEach((doc) => data.push(doc.data()));
+            setProfile(data.length > 0 ? data[0] : null);
+        });
+    }, []);
+
+    console.log({profile})
 
     return (
         <>
@@ -21,15 +35,11 @@ export default function PartyPage() {
         
         <div className='content_wrap dummy_img'>
             
-            
-            
-            <DummyImg src='/profileCard.png'></DummyImg>
-            
-            
-            <ActionBtn btnName="프로필 카드 수정" onClick={navigate('/post')} />
+        <ProfileCard  profileData={profile}></ProfileCard>
+            <ActionBtn btnName="프로필 카드 수정" onClick={() => navigate('/profile/write')}/>
         </div>
 
         <BottomNavigation />
         </>
-    );
+    ); 
 }

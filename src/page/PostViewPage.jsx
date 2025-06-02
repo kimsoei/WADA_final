@@ -3,11 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase";
 
 import Header from "../jsx/Header";
-import TabMenu from "../jsx/TabMenu";
 import PostContainer from "../jsx/PostContainer";
-import BottomNavigation from "../jsx/BottomNavigation";
-import PositionCardList from "../jsx/PositionCardList";
-import ActionBtn from "../jsx/ActionBtn";
 import { useState } from "react";
 import { useEffect } from "react";
 

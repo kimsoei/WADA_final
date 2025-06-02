@@ -120,17 +120,24 @@ const FloatingImg = styled.img`
 export default function PostPage() {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('전체');
 
     useEffect(() => {
         let tempData = []
         db.collection('post').get().then((qs)=>{
             qs.forEach((doc) => {
-                tempData.push(doc.data())
+               tempData.push({ id: doc.id, ...doc.data() });
             })
             setPosts(tempData)
         })
     },[])
 
+
+    const filteredPosts = selectedCategory === '전체'
+        ? posts
+        : posts.filter(post => post.category === selectedCategory);
+    // 여기 필터링(카테고리)
+        
     return (
         <>
         <Header type="back" title="모집글 목록" />
@@ -138,14 +145,13 @@ export default function PostPage() {
             <SearchBar />
             <TabMenu
                 items={['전체', '졸업작품', '사이드 프로젝트', '공모전', '기타']}
-                onChange={(value) => console.log('선택된 탭:', value)}
+                onChange={(value) => setSelectedCategory(value)}
             />
         </div>
 
 
-        <PostContentWrap>
-            
-            <PostList type="postList" posts={posts} />
+        <PostContentWrap> 
+            <PostList type="postList" posts={filteredPosts} />
             
         </PostContentWrap>
 

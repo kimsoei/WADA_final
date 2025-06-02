@@ -50,11 +50,15 @@ const StyledArrow = styled.img`
 
 const DropdownList = styled(motion.ul)`
   width: 100%;
+  position: absolute;
+  top: 84px;
+  max-height: 160px;
   background-color: #fff;
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   border-radius: ${({ theme }) => theme.radius.small};
   margin-top: 4px;
   overflow: hidden;
+  overflow-y: scroll;
   z-index: 10;
   padding: 4px 8px;
   display: flex;
@@ -81,8 +85,8 @@ const MotionErrorMsg = styled(motion.p)`
 `;
 
 const dropdownAnimation = {
-  open: { opacity: 1, height: 'auto', transition: { duration: 0.3 } },
-  closed: { opacity: 0, height: 0, transition: { duration: 0.5 } },
+  open: { opacity: 1, height: 'auto', transition: { duration: 0.1 } },
+  closed: { opacity: 1, height: 0, transition: { duration: 0.1 } },
 };
 
 const errorShake = {
