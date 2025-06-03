@@ -15,12 +15,14 @@ const ListWrap = styled.div`
     margin-bottom: 8px;
 `;
 
-function PostList({ posts = [], type = 'postList',}) {
+function PostList({ posts = [], type = 'postList', limit=null}) {
     const navigate = useNavigate();
+    const postLimit = limit ? posts.slice(0, limit) : posts;
+    // limit 프롭스로 렌더링할 post개수 제한
 
     return (
         <ListWrap>
-        {posts.map((post, index) => (
+        {postLimit.map((post, index) => (
             <PostItem 
             key={index} 
             {...post} 

@@ -110,7 +110,7 @@ export default function PostWritePage() {
             db.collection('post').doc(timestamp).set({
                 id: timestamp,
                 date: Date.now(),
-            viewCount: 0,
+                viewCount: 0,
                 ...formData,
             }).then(()=>{
                 alert('성공이길.. 제발..!')

@@ -4,7 +4,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { forwardRef } from "react";
 import { useEffect } from "react";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 
 const DatePickerWrap = styled.div`
     display:flex;
@@ -81,20 +81,12 @@ function DatePicker( {title, value, onChange} ){
 
     const handleFromDate = (date) => {
     setFromDate(date);
-    const formatted = [
-        format(date, "yyyy.MM.dd"),
-        format(toDate, "yyyy.MM.dd"),
-    ];
-    onChange?.(formatted);
+    onChange?.([date, toDate]);
   };
 
   const handleToDate = (date) => {
     setToDate(date);
-    const formatted = [
-        format(fromDate, "yyyy.MM.dd"),
-        format(date, "yyyy.MM.dd"),
-    ];
-    onChange?.(formatted);
+    onChange?.([fromDate, date]);
   };
 
     return(
@@ -104,7 +96,6 @@ function DatePicker( {title, value, onChange} ){
         </TitleWrap>
 
         <PickerCon>
-
             <ReactDatePicker
                 selected={fromDate}
                 onChange={handleFromDate}

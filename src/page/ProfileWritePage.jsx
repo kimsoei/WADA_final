@@ -55,7 +55,7 @@ function ProfileWritePage(){
         major: '',
         description: '',
         enroll: '',
-        taks: '',
+        task: '',
         position: [],
         stack: []
     });

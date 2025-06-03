@@ -36,7 +36,7 @@ export default function PartyPage() {
         <div className='content_wrap dummy_img'>
             
         <ProfileCard  profileData={profile}></ProfileCard>
-            <ActionBtn btnName="프로필 카드 수정" onClick={() => navigate('/profile/write')}/>
+            <ActionBtn  btnName={profile ? "프로필 카드 수정" : "프로필 카드 작성"} onClick={() => navigate('/profile/write')}/>
         </div>
 
         <BottomNavigation />

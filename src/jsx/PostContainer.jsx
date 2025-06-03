@@ -261,7 +261,7 @@ function PostContainer(props) {
         <InfoItem label="카테고리" value={post.category} />
         <InfoItem label="목적" value={post.purpose} />
         {post.status && <InfoItem label="현황" value={post.status} />}
-        {post.projectDate && <InfoItem label="기간" value={post.projectDate} />}
+        {post.projectDate && <InfoItem label="기간" value={formatDate(post.date)} />}
       </InformationsWrapper>
 
       <DescriptionWrapper>

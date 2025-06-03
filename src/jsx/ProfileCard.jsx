@@ -88,13 +88,23 @@ const Logo = styled.div`
 
 const EmptyWrap = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 8px;
     width: 100%;
     height: 572px;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.colors.gray[0]};
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+
+    color: ${({ theme }) => theme.colors.gray[400]};
+    text-align: center;
+
+    & > h1{
+    color: ${({ theme }) => theme.colors.gray[600]};
+    font-size: 20px;
+    }
 `
 
 function ProfileCard({profileData}){
@@ -102,10 +112,22 @@ function ProfileCard({profileData}){
       if (!profileData) {
         return (
             <EmptyWrap>
-               <img src="/empty.svg"></img>
+               <h1>프로필 카드가 없어요.</h1>
+               <p>아래 버튼을 눌러 프로필을 작성하세요.</p>
             </EmptyWrap>
         );
     }
+
+    let TaskIcon = '/designer.svg'
+    if (profileData.task === '디자이너') {
+        TaskIcon = '/designer.svg';
+    } else if (profileData.task === '개발자') {
+        TaskIcon = '/programmer.svg';
+    } else if (profileData.task === '기획자') {
+        TaskIcon = '/productmanager.svg';
+    }   
+
+    console.log({TaskIcon})
 
     return(
         <>
@@ -122,7 +144,7 @@ function ProfileCard({profileData}){
                 <BorderLine></BorderLine>
                 <PositionBox>
                     <TaskBox>
-                        <img src="/pencil.svg"></img>
+                        <img src={TaskIcon}></img>
                         <Task>{profileData.task}</Task>
                     </TaskBox>
                     <ChipList

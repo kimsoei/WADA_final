@@ -16,6 +16,12 @@ const PostWrap = styled.div`
         type === 'homeList' ? theme.radius.medium : 'none'};
 `;
 
+const PostBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+`
+
 const PostTextWrap = styled.div`
     display: flex;
     flex-direction: column;
@@ -111,11 +117,6 @@ const ViewImg = styled.img`
     height: 16px;
 `
 
-function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
-}
-
 function getDeadlineText(timestamp) {
     const today = new Date();
     const target = new Date(timestamp);
@@ -129,35 +130,44 @@ function PostItem({
     type = 'postList',
     category,
     topic,
-    date,
-    position,
-    skills,
     author,
     viewCount,
     positions=[],
     onClick,
+    projectDate
 }) {
+
     const positionSkills = [...new Set(positions.flatMap(p => p.stack))];
     // -> 기술스택 중복 제거용 가공 코드 positions.stack 에서 중복 제거된 데이터가 positionSkills입ㅂ니다!
-    const positionTasks = positions.map(p => p.task);
+    const positionTasks = [...new Set(positions.flatMap(p => p.task))];
+    // -> 분야 중복 제거용 가공 코드 positions.stack 에서 중복 제거된 데이터가 positionSkills입ㅂ니다!
+
+    function formatDate(dateInput) {
+        const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+    }
 
     return (
         <PostWrap onClick={onClick} type={type}>
+        <PostBox>
         <PostTextWrap>
             <Category>{category}</Category>
 
             <PostTextInfo>
                 <Title>{topic}</Title>
                 <DateText>
-                    {formatDate(date)} 까지 <DeadDate>{getDeadlineText(date)}</DeadDate>
+                     {projectDate?.[0]?.toDate && projectDate?.[1]?.toDate &&(
+                    `${formatDate(projectDate[1].toDate())}까지`)}
+                    <DeadDate>{getDeadlineText(projectDate[1].toDate())}</DeadDate>
                 </DateText>
                 <PositionText>
-                    {Array.isArray(position) ? position.join(" · ") : position}
+                    {positionTasks.join(' · ')}
                 </PositionText>
             </PostTextInfo>
         </PostTextWrap>
 
         <ChipList type='none' chips={positionSkills} size="small" unLock={false} />
+        </PostBox>
 
         {type === 'postList' || type === 'homeList' ? (
             <BlankLine />
