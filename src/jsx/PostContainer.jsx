@@ -6,6 +6,21 @@ import PositionCardList from "./PositionCardList";
 import { db } from "../firebase";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ActionBtn from "./ActionBtn";
+
+const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: calc(875px - 52px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const TitleWrapper = styled.div`
   display: flex;
@@ -156,8 +171,17 @@ const InformationWrapper = styled.div`
 
 const DescriptionWrapper = styled.div`
   background-color: #fff;
-  width: 402px;
   padding: 24px 20px;
+  flex: 1 0 0;
+
+  & > h3 {
+    margin-bottom: 16px;
+  }
+`;
+
+const ActionBtnWrapper = styled.div`
+  background-color: #fff;
+  padding: 16px 20px 16px 20px;
 `;
 
 function formatDate(timestamp) {
@@ -211,7 +235,7 @@ function PostContainer(props) {
   };
 
   return (
-    <>
+    <PageWrapper>
       <TitleWrapper>
         <TextWrapper>
           <StyledTopicWrapper>
@@ -261,14 +285,20 @@ function PostContainer(props) {
         <InfoItem label="카테고리" value={post.category} />
         <InfoItem label="목적" value={post.purpose} />
         {post.status && <InfoItem label="현황" value={post.status} />}
-        {post.projectDate && <InfoItem label="기간" value={formatDate(post.date)} />}
+        {post.projectDate && (
+          <InfoItem label="기간" value={formatDate(post.date)} />
+        )}
       </InformationsWrapper>
 
       <DescriptionWrapper>
         <h3>프로젝트 소개</h3>
         <p>{post.description}</p>
       </DescriptionWrapper>
-    </>
+
+      <ActionBtnWrapper>
+        <ActionBtn btnName={"지원하기"} type={"disabled"} />
+      </ActionBtnWrapper>
+    </PageWrapper>
   );
 }
 

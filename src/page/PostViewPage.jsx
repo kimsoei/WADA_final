@@ -4,6 +4,8 @@ import { db } from "../firebase";
 
 import Header from "../jsx/Header";
 import PostContainer from "../jsx/PostContainer";
+import ActionBtn from "../jsx/ActionBtn";
+
 import { useState } from "react";
 import { useEffect } from "react";
 
