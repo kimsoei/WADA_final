@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import DotsIcon from "../assets/icons/dots_vertical.svg";
 import TabMenu from "./TabMenu";
@@ -176,12 +176,34 @@ const DescriptionWrapper = styled.div`
 
   & > h3 {
     margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 150%; /* 27px */
+    color: ${({ theme }) => theme.colors.gray[800]};
+  }
+
+  & > p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+    color: ${({ theme }) => theme.colors.gray[600]};
   }
 `;
 
 const ActionBtnWrapper = styled.div`
   background-color: #fff;
   padding: 16px 20px 16px 20px;
+`;
+
+const TabMenuWrapper = styled.div`
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 10;
+`;
+
+const SectionWrapper = styled.div`
+  scroll-margin-top: 58px;
 `;
 
 function formatDate(timestamp) {
@@ -203,6 +225,22 @@ function PostContainer(props) {
   const { post } = props;
 
   const postId = useParams().id;
+
+  const refPosition = useRef(null);
+  const refInformation = useRef(null);
+  const refDescription = useRef(null);
+
+  const scrollTo = (section) => {
+    if (section === "모집 포지션" && refPosition.current) {
+      refPosition.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (section === "정보" && refInformation.current) {
+      refInformation.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (section === "소개" && refDescription.current) {
+      refDescription.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const [position, setPosition] = useState([]);
 
@@ -244,6 +282,8 @@ function PostContainer(props) {
     );
   };
 
+  const [isPositionSelected, setIspositionSelected] = useState(false);
+
   return (
     <PageWrapper>
       <TitleWrapper>
@@ -281,32 +321,50 @@ function PostContainer(props) {
         </AuthorInfo>
       </TitleWrapper>
 
-      <TabMenu
-        items={["모집 포지션", "정보", "소개"]}
-        onChange={(value) => console.log("선택된 탭:", value)}
-      />
+      <TabMenuWrapper>
+        <TabMenu
+          items={["모집 포지션", "정보", "소개"]}
+          onChange={(value) => {
+            console.log("선택된 탭:", value);
+            scrollTo(value);
+          }}
+        />
+      </TabMenuWrapper>
 
-      <PositionWrapper>
-        <h3>모집 포지션</h3>
-        <PositionCardList cards={position} mode="single" />
-      </PositionWrapper>
+      <SectionWrapper ref={refPosition} data-section="모집 포지션">
+        <PositionWrapper>
+          <h3>모집 포지션</h3>
+          <PositionCardList
+            cards={position}
+            mode="single"
+            onSelect={() => setIspositionSelected(true)}
+          />
+        </PositionWrapper>
+      </SectionWrapper>
 
-      <InformationsWrapper>
-        <InfoItem label="카테고리" value={post.category} />
-        <InfoItem label="목적" value={post.purpose} />
-        {post.status && <InfoItem label="현황" value={post.status} />}
-        {post.projectDate && (
-          <InfoItem label="기간" value={formatDate(post.date)} />
-        )}
-      </InformationsWrapper>
+      <SectionWrapper ref={refInformation} data-section="정보">
+        <InformationsWrapper>
+          <InfoItem label="카테고리" value={post.category} />
+          <InfoItem label="목적" value={post.purpose} />
+          {post.status && <InfoItem label="현황" value={post.status} />}
+          {post.projectDate && (
+            <InfoItem label="기간" value={formatDate(post.date)} />
+          )}
+        </InformationsWrapper>
+      </SectionWrapper>
 
-      <DescriptionWrapper>
-        <h3>프로젝트 소개</h3>
-        <p>{post.description}</p>
-      </DescriptionWrapper>
+      <SectionWrapper ref={refDescription} data-section="소개">
+        <DescriptionWrapper>
+          <h3>프로젝트 소개</h3>
+          <p>{post.description}</p>
+        </DescriptionWrapper>
+      </SectionWrapper>
 
       <ActionBtnWrapper>
-        <ActionBtn btnName={"지원하기"} type={"disabled"} />
+        <ActionBtn
+          btnName={"지원하기"}
+          type={isPositionSelected ? "default" : "disabled"}
+        />
       </ActionBtnWrapper>
     </PageWrapper>
   );
