@@ -25,7 +25,7 @@ const PersonalBox = styled.div`
 `
 
 const PersonalText = styled.div`
-    width: 154px;
+    width: fit-content;
     display: flex;
     flex-direction: column;
 
@@ -33,16 +33,22 @@ const PersonalText = styled.div`
 `
 
 const IconBox = styled.div`
-    width:68px;
-    height: 68px;
+    width: 70px;
+    height: 70px;
     background-color: #222;
     border-radius: 36px;
+
+    background-image: url("/DesignerProfile.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 `
 
 const Name = styled.p`
     font-size: 20px;
     font-weight: 700;
     color: ${({ theme }) => theme.colors.gray[700]};
+    margin-bottom: 4px;
 `
 
 const Enroll = styled.p`
@@ -138,7 +144,7 @@ function ProfileCard({profileData}){
                     <PersonalText>
                         <Name>{profileData.name}</Name> 
                         <Enroll>{profileData.enroll}</Enroll>
-                        <Major>{profileData.major}{profileData.grade}</Major>
+                        <Major>{profileData.major}&nbsp;{profileData.grade}</Major>
                     </PersonalText>
                 </PersonalBox>
                 <BorderLine></BorderLine>

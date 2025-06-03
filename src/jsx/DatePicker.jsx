@@ -4,7 +4,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { forwardRef } from "react";
 import { useEffect } from "react";
-// import { format } from "date-fns";
+import "../DatePickerStyle.css";
 
 const DatePickerWrap = styled.div`
     display:flex;

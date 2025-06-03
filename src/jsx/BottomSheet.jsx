@@ -16,6 +16,7 @@ const SheetCon = styled.div`
     width: 402px;
     height: auto;
     padding: 0px 20px 36px 20px;
+    overflow-y: hidden;
 
     position: absolute;
     bottom: 0;
@@ -72,13 +73,18 @@ function BottomSheet( {onAdd, onClose} ){
 
     const [partyPosition, setpartyPosition] = useState({ task: '', position: '', stack: [], });
 
+
     const positionOptions = {
-        디자인: ['UI 디자이너', 'UX 디자이너', 'BX 디자이너', '좀 더 추가하기'],
-        개발: ['프론트엔드', '백엔드', '풀스택', '좀 더 추가하기'],
-        기획: ['서비스 기획', 'PM', '콘텐츠 기획', '좀 더 추가하기'],
+        디자이너: ['UI 디자이너', 'UX 디자이너', 'BX 디자이너', 'UX 전략가', '서비스 디자이너', '3D 디자이너', '모션 디자이너', '일러스트레이터', 'BI 디자이너'],
+        개발자: ['프론트엔드', '백엔드', '풀스택', '퍼블리셔', '개발자', '서버 관리자', 'IOS 개발자', 'Android 개발자', 'SRE', '데브옵스', '데이터 엔지니어'],
+        기획자: ['서비스 기획자', 'PM', '콘텐츠 기획자', '마케팅 기획자', '경쟁 분석가', '기능 설계자', '플로우 설계자'],
     };
 
-    const stackOptions = ['Figma', 'Photoshop', 'React', 'Vue', 'Blender', 'Node.js', 'css'];
+    const stackOptions = {
+        디자이너: ['Figma', ' Adobe XD', 'Photoshop', 'Illustrator', 'Whimsical', 'Affter Effecs', 'Cinema4D'],
+        개발자: ['React', 'Node.js', 'J-Queary', 'TypeScript', 'MongoDB', 'Swift', 'Xcode', 'Kotlin', 'Android Studio', 'Expo', 'Python','AWS' ],
+        기획자: ['Notion', 'Excel', 'Jira', 'rello', 'Google Analytics', 'PPT'],
+    };
 
   const handleTaskChange = (val) => {
     setpartyPosition((prev) => ({
@@ -108,7 +114,7 @@ function BottomSheet( {onAdd, onClose} ){
 
                 <SelectBtnWrap
                     title="모집분야"
-                    items={['디자인','개발','기획']}
+                    items={['디자이너','개발자','기획자']}
                     mode="single"
                     essential={true}
                     value={partyPosition.task}
@@ -127,7 +133,7 @@ function BottomSheet( {onAdd, onClose} ){
                 <ChipList
                     title="기술 스택"
                     subtext="최대 3개까지 선택할 수 있어요"
-                    chips={stackOptions}
+                    chips={stackOptions[partyPosition.task] || []} 
                     size="large"
                     onChange={(selectedStacks) =>
                         setpartyPosition((prev) => ({

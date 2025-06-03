@@ -68,8 +68,8 @@ export default function MainPage() {
                 </div>
             </ServiceTip>
 
-            <Banner type='dark' onClick={() => navigate('/profile/write')} />
-            <Banner type="light" onClick={() => navigate('/post/write')} />
+            <Banner type='dark' onClick={() => navigate('/profile')} />
+            <Banner type="light" onClick={() => navigate('/post')} />
 
             <div className='ConTitleWrap'>
                 <h2 className='ConTitle'>모집글</h2>

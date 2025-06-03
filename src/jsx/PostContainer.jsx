@@ -211,6 +211,16 @@ function PostContainer(props) {
       .doc(postId)
       .get()
       .then((doc) => {
+            if (doc.exists) {
+      const currentView = doc.data().viewCount || 0;
+
+      db.collection("post")
+        .doc(postId)
+        .update({
+          viewCount: currentView + 1,
+        });
+        // 조회수 부분이에여
+    }
         const data = doc.data();
 
         const allPositions = data.positions;
