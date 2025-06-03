@@ -146,7 +146,7 @@ function ProfileWritePage(){
 
             <ChipList
                 title="포지션"
-                subtext="최대 4개까지 선택할 수 있어요"
+                subtext="최대 3개까지 선택할 수 있어요"
                 chips={positionOptions[profileData.task] || []}
                 size="large"
                 selectedChips={profileData.position}
@@ -155,7 +155,7 @@ function ProfileWritePage(){
 
             <ChipList
                 title="기술 스택"
-                subtext="최대 4개까지 선택할 수 있어요"
+                subtext="최대 3개까지 선택할 수 있어요"
                 chips={stackOptions[profileData.task] || []}
                 size="large"
                 selectedChips={profileData.stack}

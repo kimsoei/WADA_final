@@ -95,7 +95,7 @@ const EmptyWrap = styled.div`
     width: 100%;
     height: 572px;
     border-radius: 8px;
-    background-color: ${({ theme }) => theme.colors.gray[0]};
+    background-color: ${({ theme }) => theme.colors.gray[50]};
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 
     color: ${({ theme }) => theme.colors.gray[400]};
