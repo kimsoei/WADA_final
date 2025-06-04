@@ -6,14 +6,13 @@ import PositionCardList from "./PositionCardList";
 import { db } from "../firebase";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ActionBtn from "./ActionBtn";
 
 const PageWrapper = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  height: calc(875px - 52px);
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: visible;
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -73,12 +72,6 @@ const PositionText = styled.p`
   color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
-const DateWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-`;
-
 const AuthorInfo = styled.div`
   display: flex;
   justify-content: space-between;
@@ -133,7 +126,6 @@ const DeadDate = styled.span`
 
 const PositionWrapper = styled.div`
   background-color: #fff;
-  margin-bottom: 8px;
   padding: 24px 20px;
   align-self: stretch;
   & > h3 {
@@ -152,7 +144,6 @@ const InformationsWrapper = styled.div`
   align-items: center;
   gap: 16px;
   align-self: stretch;
-  margin-bottom: 8px;
 `;
 
 const InformationWrapper = styled.div`
@@ -170,9 +161,9 @@ const InformationWrapper = styled.div`
 `;
 
 const DescriptionWrapper = styled.div`
+  flex-grow: 1;
   background-color: #fff;
   padding: 24px 20px;
-  flex: 1 0 0;
 
   & > h3 {
     margin-bottom: 16px;
@@ -190,11 +181,6 @@ const DescriptionWrapper = styled.div`
   }
 `;
 
-const ActionBtnWrapper = styled.div`
-  background-color: #fff;
-  padding: 16px 20px 16px 20px;
-`;
-
 const TabMenuWrapper = styled.div`
   position: sticky;
   top: 0;
@@ -204,6 +190,16 @@ const TabMenuWrapper = styled.div`
 
 const SectionWrapper = styled.div`
   scroll-margin-top: 58px;
+  display: flex;
+  flex-direction: column;
+
+  &:last-child {
+    flex-grow: 1;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
 `;
 
 function formatDate(timestamp) {
@@ -222,7 +218,7 @@ function getDeadlineText(timestamp) {
   return ` 마감 D-${dayDiff}일`;
 }
 function PostContainer(props) {
-  const { post } = props;
+  const { post, setIsPositionSelected } = props;
 
   const postId = useParams().id;
 
@@ -249,16 +245,16 @@ function PostContainer(props) {
       .doc(postId)
       .get()
       .then((doc) => {
-            if (doc.exists) {
-      const currentView = doc.data().viewCount || 0;
+        if (doc.exists) {
+          const currentView = doc.data().viewCount || 0;
 
-      db.collection("post")
-        .doc(postId)
-        .update({
-          viewCount: currentView + 1,
-        });
-        // 조회수 부분이에여
-    }
+          db.collection("post")
+            .doc(postId)
+            .update({
+              viewCount: currentView + 1,
+            });
+          // 조회수 부분이에여
+        }
         const data = doc.data();
 
         const allPositions = data.positions;
@@ -282,8 +278,6 @@ function PostContainer(props) {
     );
   };
 
-  const [isPositionSelected, setIspositionSelected] = useState(false);
-
   return (
     <PageWrapper>
       <TitleWrapper>
@@ -298,8 +292,14 @@ function PostContainer(props) {
           </StyledTopicWrapper>
 
           <DateText>
-            {formatDate(post.date)} 까지{" | "}
-            <DeadDate>{getDeadlineText(post.date)}</DeadDate>
+            {post.projectDate?.[1]?.toDate && (
+              <>
+                {formatDate(post.projectDate[1].toDate())}까지 |
+                <DeadDate>
+                  {getDeadlineText(post.projectDate[1].toDate())}
+                </DeadDate>
+              </>
+            )}
           </DateText>
 
           <PositionText>
@@ -337,7 +337,7 @@ function PostContainer(props) {
           <PositionCardList
             cards={position}
             mode="single"
-            onSelect={() => setIspositionSelected(true)}
+            onSelect={() => setIsPositionSelected(true)}
           />
         </PositionWrapper>
       </SectionWrapper>
@@ -347,8 +347,13 @@ function PostContainer(props) {
           <InfoItem label="카테고리" value={post.category} />
           <InfoItem label="목적" value={post.purpose} />
           {post.status && <InfoItem label="현황" value={post.status} />}
-          {post.projectDate && (
-            <InfoItem label="기간" value={formatDate(post.date)} />
+          {post.projectDate?.[0]?.toDate && post.projectDate?.[1]?.toDate && (
+            <InfoItem
+              label="기간"
+              value={`${formatDate(
+                post.projectDate[0].toDate()
+              )} ~ ${formatDate(post.projectDate[1].toDate())}`}
+            />
           )}
         </InformationsWrapper>
       </SectionWrapper>
@@ -359,13 +364,6 @@ function PostContainer(props) {
           <p>{post.description}</p>
         </DescriptionWrapper>
       </SectionWrapper>
-
-      <ActionBtnWrapper>
-        <ActionBtn
-          btnName={"지원하기"}
-          type={isPositionSelected ? "default" : "disabled"}
-        />
-      </ActionBtnWrapper>
     </PageWrapper>
   );
 }
