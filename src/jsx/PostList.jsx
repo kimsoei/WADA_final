@@ -17,7 +17,8 @@ const ListWrap = styled.div`
 
 function PostList({ posts = [], type = 'postList', limit=null}) {
     const navigate = useNavigate();
-    const postLimit = limit ? posts.slice(0, limit) : posts;
+    const sortedData = posts.sort((a,b) => b.id-a.id)
+    const postLimit = limit ? sortedData.slice(0, limit) : sortedData;
     // limit 프롭스로 렌더링할 post개수 제한
 
     return (
