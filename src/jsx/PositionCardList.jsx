@@ -24,7 +24,7 @@ function PositionCardList({ cards = [], mode = "single", onSelect }) {
     }
 
     if (onSelect) {
-      onSelect(cards[index]);
+      onSelect();
     }
   };
 

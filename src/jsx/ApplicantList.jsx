@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import ApplicantListItem from './ApplicantListItem';
-
-/* import { getApplicants } from '../utils/firebase';  */
+import styled from "styled-components";
+import ApplicantListItem from "./ApplicantListItem";
 
 const ListWrap = styled.div`
     display: flex;
@@ -10,48 +7,28 @@ const ListWrap = styled.div`
     gap: 8px;
 `;
 
-function ApplicantList() {
-    const [applicants, setApplicants] = useState([]);
-
-    /* useEffect(() => {
-        async function fetchApplicants() {
-        const data = await getApplicants();
-        setApplicants(data);
-        }
-
-        fetchApplicants();
-    }, []); */
-
-    useEffect(() => {
-
-    const mockData = [
-        {
-            name: '김지원',
-            imageUrl: 'https://i.postimg.cc/SNDGP9x1/image.png',
-        },
-        {
-            name: '박하늘',
-            imageUrl: '',
-        },
-        {
-            name: '',
-            imageUrl: 'https://i.postimg.cc/SNDGP9x1/image.png',
-        },
-    ];
-        setApplicants(mockData);
-    }, []);
-
+export default function ApplicantList({ applicants = [] }) {
     return (
         <ListWrap>
-        {applicants.map((applicant, index) => (
+        {applicants.length === 0 ? (
+            <div style={{
+            padding: "16px",
+            backgroundColor: "#F0F0F0",
+            borderRadius: "8px",
+            color: "#999",
+            textAlign: "center"
+            }}>
+            아직 지원자가 없어요
+            </div>
+        ) : (
+            applicants.map((applicant, index) => (
             <ApplicantListItem
-            key={index}
-            imageUrl={applicant.imageUrl}
-            name={applicant.name}
+                key={index}
+                imageUrl={applicant.imageUrl}
+                name={applicant.name}
             />
-        ))}
+            ))
+        )}
         </ListWrap>
     );
 }
-
-export default ApplicantList;

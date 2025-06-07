@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import ChipList from "./ChipList";
 import ActionBtn from "./ActionBtn";
-import { button, style } from "framer-motion/client";
 
 const PostWrap = styled.div`
   width: 100%;

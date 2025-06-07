@@ -2,15 +2,14 @@ import styled from "styled-components";
 import Header from "../jsx/Header";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import InputText from "../jsx/InputText";
 import InputDropdown from "../jsx/InputDropdown";
 import ChipList from "../jsx/ChipList";
 import ActionBtn from "../jsx/ActionBtn";
+import { useEffect } from "react";
 
 import { db } from "../firebase";
 import SelectBtnWrap from "../jsx/SelectBtnWrap";
-import { isMotionComponent } from "framer-motion";
 
 const ProfileWriteWrap = styled.div`
     display: flex;
@@ -72,19 +71,40 @@ function ProfileWritePage(){
         기획자: ['Notion', 'Excel', 'Jira', 'rello', 'Google Analytics', 'PPT'],
     };
 
-    const handleSave = () => {
-        const timestamp = new Date().getTime().toString();
-        db.collection('profile')
-            .doc(timestamp)
-            .set({
-                id: timestamp,
-                ...profileData,
-            }) 
-             .then(() => {
-                alert('프로필 저장 완료!');
-                navigate('/profile');
+const [existingProfileId, setExistingProfileId] = useState(null);
+
+
+const handleSave = () => {
+    const data = { ...profileData };
+
+    if (existingProfileId) {
+        db.collection('profile').doc(existingProfileId)
+        .update(data)
+        .then(() => {
+            alert('프로필 수정 완료!');
+            navigate('/profile');
         });
-    };
+    } else {
+        const timestamp = new Date().getTime().toString();
+        db.collection('profile').doc(timestamp)
+        .set({ id: timestamp, ...data })
+        .then(() => {
+            alert('프로필 저장 완료!');
+            navigate('/profile');
+        });
+    }
+};
+
+useEffect(() => {
+    db.collection("profile").get().then((qs) => {
+        const docs = qs.docs;
+        if (docs.length > 0) {
+        const doc = docs[0];
+        setExistingProfileId(doc.id); // 🔴 기존 문서 ID 기억
+        setProfileData(doc.data());
+        }
+    });
+}, []);
 
     return(
         <>

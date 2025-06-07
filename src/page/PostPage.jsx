@@ -10,8 +10,6 @@ import TabMenu from '../jsx/TabMenu';
 // 여기서 부터 파베 추가입니다!
 import {db} from '../firebase.js'
 import { useEffect, useState } from 'react';
-import { useReducedMotionConfig } from 'framer-motion';
-import { style } from 'framer-motion/client';
 
 
 const PostContentWrap = styled.div`

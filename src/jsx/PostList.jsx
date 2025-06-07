@@ -23,12 +23,18 @@ function PostList({ posts = [], type = 'postList', limit=null}) {
     return (
         <ListWrap>
         {postLimit.map((post, index) => (
-            <PostItem 
+        <PostItem 
             key={index} 
             {...post} 
             type={type} 
-            onClick={() => navigate(`/post/${post.id}`)
-        } />
+            onClick={() => {
+                if (type === 'partyList') {
+                navigate(`/author/${post.id}`); //  모집자 확인 페이지로 이동
+                } else {
+                navigate(`/post/${post.id}`);   //  기존 상세 페이지
+                }
+            }} 
+        />
         ))}
         </ListWrap>
     );

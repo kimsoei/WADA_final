@@ -164,6 +164,7 @@ const DescriptionWrapper = styled.div`
   flex-grow: 1;
   background-color: #fff;
   padding: 24px 20px;
+  white-space: pre-line;
 
   & > h3 {
     margin-bottom: 16px;
@@ -337,10 +338,7 @@ function PostContainer(props) {
           <PositionCardList
             cards={position}
             mode="single"
-            onSelect={(selectedCard) => {
-              setIsPositionSelected(true);
-              props.setSelectedPosition(selectedCard);
-            }}
+            onSelect={() => setIsPositionSelected(true)}
           />
         </PositionWrapper>
       </SectionWrapper>

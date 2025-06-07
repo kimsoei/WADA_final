@@ -6,6 +6,13 @@ import React, { forwardRef } from "react";
 import { useEffect } from "react";
 import "../DatePickerStyle.css";
 
+import { registerLocale } from "react-datepicker";
+import ko from "date-fns/locale/ko"; // 한국어 locale
+import "react-datepicker/dist/react-datepicker.css";
+registerLocale("ko", ko);
+
+//위 4줄은 date-picker 라이브러리 한글로 바꾸려고 긁어온거라 무시하심 댐다!! 혹시 작동 안되면 npm install date-fns 하시면 댐다!
+
 const DatePickerWrap = styled.div`
     display:flex;
     flex-direction: column;
@@ -24,7 +31,8 @@ const Title = styled.p`
 const PickerCon = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; 
+    gap: auto;
 `
 
 const Dash = styled.span`
@@ -100,7 +108,8 @@ function DatePicker( {title, value, onChange} ){
                 selected={fromDate}
                 onChange={handleFromDate}
                 customInput={<CustomDateInput />}
-                dateFormat="yyyy.MM.dd">
+                dateFormat="yyyy.MM.dd"
+                locale="ko">
             </ReactDatePicker>
 
             <Dash></Dash>
@@ -109,7 +118,8 @@ function DatePicker( {title, value, onChange} ){
                 selected={toDate}
                 onChange={handleToDate}
                 customInput={<CustomDateInput />}
-                dateFormat="yyyy.MM.dd">
+                dateFormat="yyyy.MM.dd"
+                locale="ko">
             </ReactDatePicker>
 
         </PickerCon>

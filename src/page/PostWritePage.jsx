@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { db } from '../firebase';
 
 import Header from "../jsx/Header";
 import ProgressBar from "../jsx/ProgressBar";
@@ -10,7 +11,6 @@ import SelectBtnWrap from "../jsx/SelectBtnWrap";
 import ActionBtn from "../jsx/ActionBtn";
 
 // 여기서부터 파베 추가입니다!
-import { db } from "../firebase";
 import BottomSheet from "../jsx/BottomSheet";
 import PositionCardList from "../jsx/PositionCardList";
 import DatePicker from "../jsx/DatePicker";
@@ -72,11 +72,25 @@ const StepTwoWrap = styled.div`
   gap: 32px;
 `;
 
+const ScrollLock = styled.div`
+  overflow-Y: hidden;
+`
+
 export default function PostWritePage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
   // <= 바텀시트 , 스크림 제어용
+
+        const [profile, setProfile] = useState(null);
+
+      useEffect(() => {
+        db.collection("profile").get().then((qs) => {
+          const data = [];
+          qs.forEach((doc) => data.push(doc.data()));
+          setProfile(data[0] || null);
+        });
+      }, []);
 
   const [formData, setFormData] = useState({
     topic: "",
@@ -106,12 +120,14 @@ export default function PostWritePage() {
 
       // 여기서부터 파베 추가입니다!
       let timestamp = new Date().getTime().toString();
+
       db.collection("post")
         .doc(timestamp)
         .set({
           id: timestamp,
           date: Date.now(),
           viewCount: 0,
+          author: profile?.name || "익명",
           ...formData,
         })
         .then(() => {
@@ -130,7 +146,7 @@ export default function PostWritePage() {
         <ProgressBar step={step} />
       </div>
 
-      <div className="write_content_wrap">
+      <div className={`write_content_wrap ${step === 2 ? "no-scroll" : ""}`}>
         <InfoTextWrap>
           <StepText>{step}/2</StepText>
           <InfoTitle>
@@ -253,7 +269,7 @@ export default function PostWritePage() {
         </div>
 
         {bottomSheetOpen && (
-          <>
+          <ScrollLock>
             <BottomSheet
               onClose={() => setBottomSheetOpen(false)}
               onAdd={(newPosition) => {
@@ -264,7 +280,7 @@ export default function PostWritePage() {
                 setBottomSheetOpen(false);
               }}
             ></BottomSheet>
-          </>
+          </ScrollLock>
         )}
       </div>
     </>

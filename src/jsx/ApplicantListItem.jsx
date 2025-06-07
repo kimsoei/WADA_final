@@ -4,6 +4,7 @@ const ItemWrap = styled.div`
     width: 100%;
     max-width: 362px;
     padding: 12px;
+    max-height: 48px;
     border-radius: ${({ theme }) => theme.radius.small};
     background-color: ${({ theme }) => theme.colors.gray[100]};
     display: flex;
