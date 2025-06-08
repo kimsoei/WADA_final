@@ -351,7 +351,10 @@ function PostContainer(props) {
           <PositionCardList
             cards={position}
             mode="single"
-            onSelect={() => setIsPositionSelected(true)}
+            onSelect={(selectedCard) => {
+              setIsPositionSelected?.(true);
+              props.setSelectedPosition?.(selectedCard);
+            }}
           />
         </PositionWrapper>
       </SectionWrapper>

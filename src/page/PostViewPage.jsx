@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase";
 
 import Header from "../jsx/Header";
 import PostContainer from "../jsx/PostContainer";
+import SignUpContainer from "../jsx/SignUpContainer";
 import ActionBtn from "../jsx/ActionBtn";
 
 import { useState } from "react";
@@ -36,6 +37,8 @@ const ScrollableArea = styled.div`
 
 function PostViewpage() {
   const postId = useParams().id;
+  const navigate = useNavigate();
+
   const [post, setPost] = useState({
     id: 0,
     topic: "",
@@ -48,6 +51,8 @@ function PostViewpage() {
   });
 
   const [isPositionSelected, setIsPositionSelected] = useState(false);
+
+  const [selectedPosition, setSelectedPosition] = useState(null);
 
   useEffect(() => {
     db.collection("post")
@@ -65,12 +70,23 @@ function PostViewpage() {
         <PostContainer
           post={post}
           setIsPositionSelected={setIsPositionSelected}
+          setSelectedPosition={setSelectedPosition}
         />
       </ScrollableArea>
       <ActionBtnWrapper>
         <ActionBtn
           btnName={"지원하기"}
           type={isPositionSelected ? "default" : "disabled"}
+          onClick={() => {
+            if (isPositionSelected) {
+              navigate(`/post/${postId}/signup`, {
+                state: {
+                  post,
+                  selectedPosition,
+                },
+              });
+            }
+          }}
         />
       </ActionBtnWrapper>
     </PageWrapper>
