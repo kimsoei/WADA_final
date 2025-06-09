@@ -57,6 +57,14 @@ const InfoText = styled.p`
   color: ${({ theme }) => theme.colors.gray[800]};
 `;
 
+const InfoSubText = styled.p`
+  font-size: 14px;
+  line-height: 150%;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.gray[400]};
+`;
+
+
 const InputWrap = styled.div`
   width: 100%;
 `;
@@ -69,9 +77,11 @@ const StepOneWrap = styled.div`
 `;
 
 const StepTwoWrap = styled.div`
+  height: 472px;
   display: flex;
   flex-direction: column;
   gap: 32px;
+  margin-bottom: 64px;
 `;
 
 const ScrollLock = styled.div`
@@ -174,9 +184,6 @@ export default function PostWritePage() {
   }
 };
 
-  const [editedpositionCards, setEditedPositionCards] = useState([]);
-
-
   return (
     <>
       {bottomSheetOpen && <Scrim onClick={() => setBottomSheetOpen(false)} />}
@@ -198,6 +205,11 @@ export default function PostWritePage() {
               ? "프로젝트의 기본 정보를 입력해주세요"
               : "필요한 파티원의 포지션을 등록해주세요"}
           </InfoText>
+          <InfoSubText>
+            {step === 1
+            ? ""
+            : "최대 3개까지 선택할 수 있어요."}
+          </InfoSubText>
         </InfoTextWrap>
 
         <InputWrap key={step}>
@@ -254,6 +266,7 @@ export default function PostWritePage() {
 
               <div className="DateRealative">
                 <DatePicker
+                  title='프로젝트 기간'
                   selected={formData.projectDate?.[0] || null}
                   onChange={(dates) => setFormData({ ...formData, projectDate: dates })}
                   startDate={formData.projectDate?.[0] || null}
@@ -286,21 +299,22 @@ export default function PostWritePage() {
             </StepOneWrap>
           ) : (
             <StepTwoWrap>
-             <PositionCardList
-  cards={formData.positions.map((pos) => ({
-    title: pos.position,
-    skills: pos.stack,
-  }))}
-  mode="single"
-  purpose="show"
-  onChange={(newList) => {
-    const updatedPositions = newList.map(({ title, skills }) => ({
-      position: title,
-      stack: skills,
-    }));
-    setFormData({ ...formData, positions: updatedPositions });
-  }}
-/>
+
+            <PositionCardList
+              cards={formData.positions.map((pos) => ({
+              title: pos.position,
+              skills: pos.stack,
+            }))}
+            mode="single"
+            purpose="show"
+            onChange={(newList) => {
+              const updatedPositions = newList.map(({ title, skills }) => ({
+                position: title,
+                stack: skills,
+              }));
+              setFormData({ ...formData, positions: updatedPositions });
+            }}
+            />
               <ActionBtn
                 type={positionCardLimit ? "disabled" : "outline"}
                 btnName="+ 파티원 추가"

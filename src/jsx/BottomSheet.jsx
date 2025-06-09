@@ -14,7 +14,7 @@ const SheetCon = styled.div`
     gap: 40px;
     border-radius: 24px 24px 0px 0px;
     width: 402px;
-    height: auto;
+    height: 712px;
     padding: 0px 20px 36px 20px;
     overflow-y: hidden;
 
@@ -31,6 +31,18 @@ const SheetCon = styled.div`
         to {
         transform: translateY(0);
         }
+    }
+`
+
+const SheetBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    height: 624px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
     }
 `
 
@@ -111,7 +123,7 @@ function BottomSheet( {onAdd, onClose} ){
                     <InfoTitle>파티원추가</InfoTitle>
                     <InfoText> 모집하려는 파티원의 정보를 추가해주세요</InfoText>
                 </InfoTextWrap>
-
+                <SheetBox>
                 <SelectBtnWrap
                     title="모집분야"
                     items={['디자이너','개발자','기획자']}
@@ -142,7 +154,8 @@ function BottomSheet( {onAdd, onClose} ){
                         }))
                     }
                 />
-
+        
+                </SheetBox>
                 <ActionBtn btnName ='추가하기'
                 type={partyPosition.stack.length > 0 ? 'default' : 'disabled'}
                 onClick={() => {onAdd(partyPosition)}}
