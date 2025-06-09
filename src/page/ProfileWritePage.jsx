@@ -53,6 +53,7 @@ function ProfileWritePage(){
         name: '',
         major: '',
         description: '',
+        grade:'',
         enroll: '',
         task: '',
         position: [],
@@ -114,7 +115,7 @@ useEffect(() => {
 
             <div className="write_content_wrap">
                 <InfoTextWrap>
-                    <InfoTitle>프로필카드 작성</InfoTitle>
+                    <InfoTitle>{existingProfileId ? "프로필카드 수정" : "프로필카드 작성"}</InfoTitle>
                     <InfoText>프로필 정보를 입력해 주세요</InfoText>
                 </InfoTextWrap>
 

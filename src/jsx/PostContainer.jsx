@@ -6,6 +6,7 @@ import PositionCardList from "./PositionCardList";
 import { db } from "../firebase";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Modal from "./Modal";
 
 const PageWrapper = styled.div`
   height: 100vh;
@@ -37,6 +38,7 @@ const TextWrapper = styled.div`
   align-items: flex-start;
   gap: 6px;
   align-self: stretch;
+  z-index: 9999;
 `;
 
 const StyledTopicWrapper = styled.div`
@@ -203,6 +205,12 @@ const SectionWrapper = styled.div`
   }
 `;
 
+const ModalCon = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 120px;
+`
+
 function formatDate(timestamp) {
   const date = new Date(timestamp);
   return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(
@@ -279,6 +287,8 @@ function PostContainer(props) {
     );
   };
 
+  const [modalOn, setModalOn] = useState(false);
+
   return (
     <PageWrapper>
       <TitleWrapper>
@@ -289,7 +299,9 @@ function PostContainer(props) {
               src={DotsIcon}
               style={{ cursor: "pointer" }}
               alt="수정/삭제 버튼"
+              onClick={() => setModalOn(prev => !prev)}
             />
+            {modalOn && <ModalCon><Modal id={postId}></Modal></ModalCon>}
           </StyledTopicWrapper>
 
           <DateText>
@@ -308,6 +320,7 @@ function PostContainer(props) {
               ? position.join(" · ")
               : post.position}
           </PositionText>
+
         </TextWrapper>
 
         <AuthorInfo>
