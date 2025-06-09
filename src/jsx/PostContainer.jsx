@@ -39,6 +39,8 @@ const TextWrapper = styled.div`
   gap: 6px;
   align-self: stretch;
   z-index: 9999;
+
+  position: relative;
 `;
 
 const StyledTopicWrapper = styled.div`
@@ -207,8 +209,8 @@ const SectionWrapper = styled.div`
 
 const ModalCon = styled.div`
   position: absolute;
-  right: 20px;
-  top: 120px;
+  right: 0px;
+  top: 40px;
 `
 
 function formatDate(timestamp) {

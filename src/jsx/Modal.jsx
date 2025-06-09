@@ -15,7 +15,7 @@ const ModalCon = styled.div`
 `
 
 const EditCon = styled.div`
-    padding: 12px 32px;
+    padding: 12px 28px;
     background-color: ${({ theme }) => theme.colors.gray[50]};
     color: ${({ theme }) => theme.colors.gray[800]};
 
@@ -27,7 +27,8 @@ const EditCon = styled.div`
 `
 
 const DeleteCon = styled.div`
-    padding: 12px 32px;
+
+    padding: 12px 28px;
     background-color: ${({ theme }) => theme.colors.gray[50]};
     color: ${({ theme }) => theme.colors.gray[800]};
 
