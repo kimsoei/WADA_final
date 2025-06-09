@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ChipList from "./ChipList";
 import ActionBtn from "./ActionBtn";
+import { theme } from "../styles/theme";
 
 const PostWrap = styled.div`
   width: 100%;
@@ -11,7 +12,7 @@ const PostWrap = styled.div`
   flex-direction: column;
   gap: 16px;
   cursor: pointer;
-  border-radius: ${({ theme, type }) =>
+  border-radius: ${({ type }) =>
     type === "homeList" ? theme.radius.medium : "none"};
 `;
 
@@ -36,26 +37,26 @@ const PostTextInfo = styled.div`
 const Category = styled.p`
   font-size: 12px;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const Title = styled.h3`
   font-size: 20px;
   font-weight: 700;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[800]};
+  color: ${theme.colors.gray[800]};
 `;
 
 const DateText = styled.p`
   font-size: 14px;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const PositionText = styled.p`
   font-size: 14px;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const AuthorInfo = styled.div`
@@ -87,27 +88,27 @@ const DeadDate = styled.span`
   font-size: 14px;
   font-weight: 500;
   margin-left: 4px;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${theme.colors.primary};
 `;
 
 const ViewCountNum = styled.span`
   font-size: 12px;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const AuthorName = styled.span`
   font-size: 14px;
   font-weight: 600;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const BlankLine = styled.span`
   width: 100%;
   max-width: ${({ type }) => (type === "homeList" ? "362px" : "402px")};
   height: 1px;
-  background-color: ${({ theme }) => theme.colors.gray[200]};
+  background-color: ${theme.colors.gray[200]};
 `;
 
 const ViewImg = styled.img`
@@ -197,23 +198,22 @@ function PostItem({
       )}
 
       {type === "appliedList" && (
-              <ActionArea>
-                {notice === "rejected" ? (
-                  <ActionBtn
-                    btnName="반려"
-                    type="disabled"
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                ) : (
-                  <ActionBtn
-                    btnName={notice === "accepted" ? "승인 완료" : "승인 대기 중"}
-                    type={notice === "accepted" ? "default" : "outline"}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                )}
-              </ActionArea>
-            )}
-
+        <ActionArea>
+          {notice === "rejected" ? (
+            <ActionBtn
+              btnName="반려"
+              type="disabled"
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <ActionBtn
+              btnName={notice === "accepted" ? "승인 완료" : "승인 대기 중"}
+              type={notice === "accepted" ? "default" : "outline"}
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
+        </ActionArea>
+      )}
     </PostWrap>
   );
 }

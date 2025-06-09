@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from 'react';
-import { db } from '../firebase';
+import { useEffect, useState } from "react";
+import { db } from "../firebase";
+import { theme } from "../styles/theme";
 
 import Header from "../jsx/Header";
 import ProgressBar from "../jsx/ProgressBar";
@@ -40,30 +41,29 @@ const StepText = styled.p`
   font-size: 14px;
   line-height: 150%;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray[500]};
+  color: ${theme.colors.gray[500]};
 `;
 
 const InfoTitle = styled.p`
   font-size: 24px;
   line-height: 28px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.gray[800]};
+  color: ${theme.colors.gray[800]};
 `;
 
 const InfoText = styled.p`
   font-size: 18px;
   line-height: 150%;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray[800]};
+  color: ${theme.colors.gray[800]};
 `;
 
 const InfoSubText = styled.p`
   font-size: 14px;
   line-height: 150%;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray[400]};
+  color: ${theme.colors.gray[400]};
 `;
-
 
 const InputWrap = styled.div`
   width: 100%;
@@ -77,7 +77,7 @@ const StepOneWrap = styled.div`
 `;
 
 const StepTwoWrap = styled.div`
-padding-top: 24px;
+  padding-top: 24px;
   height: 472px;
   display: flex;
   flex-direction: column;
@@ -86,8 +86,8 @@ padding-top: 24px;
 `;
 
 const ScrollLock = styled.div`
-  overflow-Y: hidden;
-`
+  overflow-y: hidden;
+`;
 
 export default function PostWritePage() {
   const navigate = useNavigate();
@@ -98,36 +98,41 @@ export default function PostWritePage() {
   const { id } = useParams();
 
   useEffect(() => {
-  if (id) {
-    db.collection("post").doc(id).get().then((doc) => {
-      if (doc.exists) {
-        const postData = doc.data();
-        setFormData({
-          topic: postData.topic || "",
-          category: postData.category || "",
-          purpose: postData.purpose || [],
-          status: postData.status || "",
-          description: postData.description || "",
-          positions: postData.positions || [],
-          projectDate: postData.projectDate || [],
-        });   
+    if (id) {
+      db.collection("post")
+        .doc(id)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const postData = doc.data();
+            setFormData({
+              topic: postData.topic || "",
+              category: postData.category || "",
+              purpose: postData.purpose || [],
+              status: postData.status || "",
+              description: postData.description || "",
+              positions: postData.positions || [],
+              projectDate: postData.projectDate || [],
+            });
 
-        setEditPositionCards(postData.positions || []);
-      }
-    });
-  }
-}, [id]);
-// <-여기까진 수정
-
-      useEffect(() => {
-        db.collection("profile").get().then((qs) => {
-          const data = [];
-          qs.forEach((doc) => data.push(doc.data()));
-          setProfile(data[0] || null);
+            setEditPositionCards(postData.positions || []);
+          }
         });
-      }, []);
+    }
+  }, [id]);
+  // <-여기까진 수정
 
-      const [editpositionCards, setEditPositionCards] = useState([]);
+  useEffect(() => {
+    db.collection("profile")
+      .get()
+      .then((qs) => {
+        const data = [];
+        qs.forEach((doc) => data.push(doc.data()));
+        setProfile(data[0] || null);
+      });
+  }, []);
+
+  const [editpositionCards, setEditPositionCards] = useState([]);
 
   const [formData, setFormData] = useState({
     topic: "",
@@ -149,46 +154,49 @@ export default function PostWritePage() {
   // recruitdetail??이게 먼지 모르겠어서 일단 포지션카드의 개수로 바꿨으여 positions는 포지션별 데이토에요요
   const positionCardLimit = formData.positions.length >= 3;
 
- const handleNext = () => {
-  if (step === 1 && isStep1Valid) {
-    setStep(2);
-    return; // step 1이면 여기서 끝
-  }
-
-  if (step === 2 && isStep2Valid) {
-    if (id) {
-      // 수정일 경우 update만 실행하고 return으로 마무리
-      db.collection("post").doc(id).update(formData).then(() => {
-        alert("수정 완료!");
-        navigate("/post");
-      });
-      return;
+  const handleNext = () => {
+    if (step === 1 && isStep1Valid) {
+      setStep(2);
+      return; // step 1이면 여기서 끝
     }
 
-    // 작성일 경우 set 실행
-    const timestamp = new Date().getTime().toString();
+    if (step === 2 && isStep2Valid) {
+      if (id) {
+        // 수정일 경우 update만 실행하고 return으로 마무리
+        db.collection("post")
+          .doc(id)
+          .update(formData)
+          .then(() => {
+            alert("수정 완료!");
+            navigate("/post");
+          });
+        return;
+      }
 
-    db.collection("post")
-      .doc(timestamp)
-      .set({
-        id: timestamp,
-        date: Date.now(),
-        viewCount: 0,
-        author: profile?.name || "익명",
-        ...formData,
-      })
-      .then(() => {
-        alert("작성 완료!");
-        navigate("/post");
-      });
-  }
-};
+      // 작성일 경우 set 실행
+      const timestamp = new Date().getTime().toString();
+
+      db.collection("post")
+        .doc(timestamp)
+        .set({
+          id: timestamp,
+          date: Date.now(),
+          viewCount: 0,
+          author: profile?.name || "익명",
+          ...formData,
+        })
+        .then(() => {
+          alert("작성 완료!");
+          navigate("/post");
+        });
+    }
+  };
 
   return (
     <>
       {bottomSheetOpen && <Scrim onClick={() => setBottomSheetOpen(false)} />}
 
-      <Header type="back" title="모집글 작성" backTo="/post" />
+      <Header type="back" title="파티 모집 작성" backTo="/post" />
       <div className="white-bg">
         <ProgressBar step={step} />
       </div>
@@ -206,9 +214,7 @@ export default function PostWritePage() {
               : "필요한 파티원의 포지션을 등록해주세요"}
           </InfoText>
           <InfoSubText>
-            {step === 1
-            ? ""
-            : "최대 3개까지 선택할 수 있어요."}
+            {step === 1 ? "" : "최대 3개까지 선택할 수 있어요."}
           </InfoSubText>
         </InfoTextWrap>
 
@@ -266,9 +272,11 @@ export default function PostWritePage() {
 
               <div className="DateRealative">
                 <DatePicker
-                  title='프로젝트 기간'
+                  title="프로젝트 기간"
                   selected={formData.projectDate?.[0] || null}
-                  onChange={(dates) => setFormData({ ...formData, projectDate: dates })}
+                  onChange={(dates) =>
+                    setFormData({ ...formData, projectDate: dates })
+                  }
                   startDate={formData.projectDate?.[0] || null}
                   endDate={formData.projectDate?.[1] || null}
                   selectsRange
@@ -299,22 +307,21 @@ export default function PostWritePage() {
             </StepOneWrap>
           ) : (
             <StepTwoWrap>
-
-            <PositionCardList
-              cards={formData.positions.map((pos) => ({
-              title: pos.position,
-              skills: pos.stack,
-            }))}
-            mode="single"
-            purpose="show"
-            onChange={(newList) => {
-              const updatedPositions = newList.map(({ title, skills }) => ({
-                position: title,
-                stack: skills,
-              }));
-              setFormData({ ...formData, positions: updatedPositions });
-            }}
-            />
+              <PositionCardList
+                cards={formData.positions.map((pos) => ({
+                  title: pos.position,
+                  skills: pos.stack,
+                }))}
+                mode="single"
+                purpose="show"
+                onChange={(newList) => {
+                  const updatedPositions = newList.map(({ title, skills }) => ({
+                    position: title,
+                    stack: skills,
+                  }));
+                  setFormData({ ...formData, positions: updatedPositions });
+                }}
+              />
               <ActionBtn
                 type={positionCardLimit ? "disabled" : "outline"}
                 btnName="+ 파티원 추가"

@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavBtn from "./NavBtn";
+import { theme } from "../styles/theme";
 
 import HomeIcon from "../assets/icons/nav_home.svg?react";
 import PostIcon from "../assets/icons/nav_post.svg?react";
@@ -12,7 +13,7 @@ const NavCon = styled.div`
   padding: 16px 28px 32px 28px;
   width: 100%;
   max-width: 402px;
-  border-top: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-top: 1px solid ${theme.colors.gray[200]};
   justify-content: center;
   gap: 20px;
   background-color: #fff;
@@ -27,13 +28,12 @@ function BottomNavigation() {
 
   const navItems = [
     { key: "home", menu: "홈", icon: HomeIcon, path: "/" },
-    { key: "post", menu: "모집글", icon: PostIcon, path: "/post" },
+    { key: "post", menu: "파티 모집", icon: PostIcon, path: "/post" },
     { key: "party", menu: "내 파티", icon: PartyIcon, path: "/party" },
     { key: "profile", menu: "프로필", icon: ProfileIcon, path: "/profile" },
   ];
 
   return (
-    
     <NavCon>
       {navItems.map((item) => (
         <NavBtn
@@ -46,9 +46,7 @@ function BottomNavigation() {
       ))}
 
       <div className="DeviceIndicator"></div>
-      
     </NavCon>
-    
   );
 }
 

@@ -1,9 +1,11 @@
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-import backIcon from '../assets/icons/back_header.svg';
-import noticeIcon from '../assets/icons/notice.svg';
-import noticeActiveIcon from '../assets/icons/notice_active.svg';
+import backIcon from "../assets/icons/back_header.svg";
+import noticeIcon from "../assets/icons/notice.svg";
+import noticeActiveIcon from "../assets/icons/notice_active.svg";
+
+import { theme } from "../styles/theme";
 
 const HeaderWrap = styled.div`
   width: 100%;
@@ -15,7 +17,7 @@ const HeaderWrap = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[200]};
+  border-bottom: 1px solid ${theme.colors.gray[200]};
 `;
 
 const IconImg = styled.img`
@@ -41,10 +43,10 @@ const EmptyBlock = styled.div`
   opacity: 0;
 `;
 
-function Header({ type = 'default', badge = false, title = '', backTo = '/' }) {
-  const navigate = useNavigate(); 
+function Header({ type = "default", badge = false, title = "", backTo = "/" }) {
+  const navigate = useNavigate();
 
-  if (type === 'default') {
+  if (type === "default") {
     return (
       <HeaderWrap>
         <LogoImg src="/logo.svg" />
@@ -61,6 +63,5 @@ function Header({ type = 'default', badge = false, title = '', backTo = '/' }) {
     </HeaderWrap>
   );
 }
-
 
 export default Header;

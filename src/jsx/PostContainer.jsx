@@ -7,6 +7,7 @@ import { db } from "../firebase";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Modal from "./Modal";
+import { theme } from "../styles/theme";
 
 const PageWrapper = styled.div`
   height: 100vh;
@@ -51,7 +52,7 @@ const StyledTopicWrapper = styled.div`
 `;
 
 const StyledTopic = styled.div`
-  color: ${({ theme }) => theme.colors.gray[900]};
+  color: ${theme.colors.gray[900]};
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
@@ -67,13 +68,13 @@ const StyledTopic = styled.div`
 const DateText = styled.p`
   font-size: 14px;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const PositionText = styled.p`
   font-size: 14px;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const AuthorInfo = styled.div`
@@ -106,7 +107,7 @@ const AuthorName = styled.span`
   font-size: 14px;
   font-weight: 600;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const ViewImg = styled.img`
@@ -118,14 +119,14 @@ const ViewImg = styled.img`
 const ViewCountNum = styled.span`
   font-size: 12px;
   line-height: 150%;
-  color: ${({ theme }) => theme.colors.gray[600]};
+  color: ${theme.colors.gray[600]};
 `;
 
 const DeadDate = styled.span`
   line-height: 150%;
   font-size: 14px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${theme.colors.primary};
 `;
 
 const PositionWrapper = styled.div`
@@ -175,14 +176,14 @@ const DescriptionWrapper = styled.div`
     font-size: 18px;
     font-weight: 700;
     line-height: 150%; /* 27px */
-    color: ${({ theme }) => theme.colors.gray[800]};
+    color: ${theme.colors.gray[800]};
   }
 
   & > p {
     font-size: 16px;
     font-weight: 400;
     line-height: 150%; /* 24px */
-    color: ${({ theme }) => theme.colors.gray[600]};
+    color: ${theme.colors.gray[600]};
   }
 `;
 
@@ -211,7 +212,7 @@ const ModalCon = styled.div`
   position: absolute;
   right: 0px;
   top: 40px;
-`
+`;
 
 function formatDate(timestamp) {
   const date = new Date(timestamp);
@@ -301,9 +302,13 @@ function PostContainer(props) {
               src={DotsIcon}
               style={{ cursor: "pointer" }}
               alt="수정/삭제 버튼"
-              onClick={() => setModalOn(prev => !prev)}
+              onClick={() => setModalOn((prev) => !prev)}
             />
-            {modalOn && <ModalCon><Modal id={postId}></Modal></ModalCon>}
+            {modalOn && (
+              <ModalCon>
+                <Modal id={postId}></Modal>
+              </ModalCon>
+            )}
           </StyledTopicWrapper>
 
           <DateText>
@@ -322,7 +327,6 @@ function PostContainer(props) {
               ? position.join(" · ")
               : post.position}
           </PositionText>
-
         </TextWrapper>
 
         <AuthorInfo>

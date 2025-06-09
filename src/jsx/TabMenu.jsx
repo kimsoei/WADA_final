@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { theme } from "../styles/theme";
 
 const TabMenuWrap = styled.div`
   width: 402px;
@@ -7,7 +8,7 @@ const TabMenuWrap = styled.div`
   line-height: 40px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray[300]};
+  border-bottom: 1px solid ${theme.colors.gray[300]};
   padding-left: 20px;
   gap: 20px;
   background-color: #fff;
@@ -24,10 +25,10 @@ const TabItem = styled.span`
 
   font-weight: ${({ $selected }) => ($selected ? 600 : 500)};
 
-  color: ${({ theme, $selected }) =>
+  color: ${({ $selected }) =>
     $selected ? theme.colors.gray[800] : theme.colors.gray[300]};
 
-  border-bottom: ${({ theme, $selected }) =>
+  border-bottom: ${({ $selected }) =>
     $selected ? `3px solid ${theme.colors.gray[800]}` : "none"};
 `;
 

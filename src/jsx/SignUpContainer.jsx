@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import ProfileCard from "./ProfileCard";
 import InputText from "./InputText";
+import { theme } from "../styles/theme";
 
 const PositionWrapper = styled.div`
   background: #fff;
   padding: 24px 20px;
 
   & > h6 {
-    color: ${({ theme }) => theme.colors.gray[400]};
+    color: ${theme.colors.gray[400]};
     font-family: Pretendard;
     font-size: 12px;
     font-weight: 400;
@@ -15,7 +16,7 @@ const PositionWrapper = styled.div`
   }
 
   & > h1 {
-    color: #444;
+    color: ${theme.colors.gray[800]};
     font-family: Pretendard;
     font-size: 24px;
     font-weight: 700;
@@ -24,7 +25,7 @@ const PositionWrapper = styled.div`
   }
 
   & > p {
-    color: ${({ theme }) => theme.colors.gray[500]};
+    color: ${theme.colors.gray[500]};
     font-family: Pretendard;
     font-size: 14px;
     font-weight: 400;
@@ -57,7 +58,6 @@ const PageWrapper = styled.div`
   gap: 8px;
 `;
 
-
 function SignUpContainer({ selectedPosition, profile, message, setMessage }) {
   return (
     <PageWrapper>
@@ -85,6 +85,5 @@ function SignUpContainer({ selectedPosition, profile, message, setMessage }) {
     </PageWrapper>
   );
 }
-
 
 export default SignUpContainer;

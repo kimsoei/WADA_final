@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from "react";
+import styled from "styled-components";
+import { motion, AnimatePresence } from "framer-motion";
+import { theme } from "../styles/theme";
 
 const DropdownWrap = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const DropdownWrap = styled.div`
 const TitleWrap = styled.div`
   font-size: 18px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.gray[800]};
+  color: ${theme.colors.gray[800]};
   display: flex;
   align-items: center;
   margin-bottom: 12px;
@@ -31,13 +32,19 @@ const MotionDropdownHeader = styled(motion.button)`
   line-height: 22px;
   text-align: left;
   background-color: #fff;
-  border: 1px solid ${({ theme, $hasError, open }) =>
-    $hasError ? theme.colors.error : open ? theme.colors.primary : theme.colors.gray[300]};
-  border-radius: ${({ theme }) => theme.radius.small};
+  border: 1px solid
+    ${({ $hasError, open }) =>
+      $hasError
+        ? theme.colors.error
+        : open
+        ? theme.colors.primary
+        : theme.colors.gray[300]};
+  border-radius: ${theme.radius.small};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${({ theme, $inValue }) => $inValue ? theme.colors.gray[800] : theme.colors.gray[400]};
+  color: ${({ $inValue }) =>
+    $inValue ? theme.colors.gray[800] : theme.colors.gray[400]};
   cursor: pointer;
 `;
 
@@ -45,7 +52,7 @@ const StyledArrow = styled.img`
   width: 20px;
   height: 20px;
   transition: transform 0.3s ease;
-  transform: ${({ open }) => (open ? 'rotate(-180deg)' : 'rotate(0deg)')};
+  transform: ${({ open }) => (open ? "rotate(-180deg)" : "rotate(0deg)")};
 `;
 
 const DropdownList = styled(motion.ul)`
@@ -54,8 +61,8 @@ const DropdownList = styled(motion.ul)`
   top: 84px;
   max-height: 160px;
   background-color: #fff;
-  border: 1px solid ${({ theme }) => theme.colors.gray[300]};
-  border-radius: ${({ theme }) => theme.radius.small};
+  border: 1px solid ${theme.colors.gray[300]};
+  border-radius: ${theme.radius.small};
   margin-top: 4px;
   overflow: hidden;
   overflow-y: scroll;
@@ -69,23 +76,23 @@ const DropdownList = styled(motion.ul)`
 const DropdownItem = styled.li`
   padding: 12px;
   font-size: 14px;
-  background-color: ${({ selected, theme }) =>
-    selected ? theme.colors.secondary : '#fff'};
-  color: ${({ selected, theme }) =>
+  background-color: ${({ selected }) =>
+    selected ? theme.colors.secondary : "#fff"};
+  color: ${({ selected }) =>
     selected ? theme.colors.primary : theme.colors.gray[800]};
-  border-radius: ${({ theme }) => theme.radius.small};
+  border-radius: ${theme.radius.small};
   cursor: pointer;
 `;
 
 const MotionErrorMsg = styled(motion.p)`
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.error};
+  color: ${theme.colors.error};
   line-height: 150%;
   margin-top: 8px;
 `;
 
 const dropdownAnimation = {
-  open: { opacity: 1, height: 'auto', transition: { duration: 0.1 } },
+  open: { opacity: 1, height: "auto", transition: { duration: 0.1 } },
   closed: { opacity: 1, height: 0, transition: { duration: 0.1 } },
 };
 
@@ -99,17 +106,17 @@ const errorShake = {
 
 function InputDropdown({
   items = [],
-  title = '항목 선택',
-  placeholder = '선택해주세요',
+  title = "항목 선택",
+  placeholder = "선택해주세요",
   onSelect,
-  type = 'default',
-  value = '',
+  type = "default",
+  value = "",
 }) {
   const [open, setOpen] = useState(false);
   const [touched, setTouched] = useState(false);
   const selected = value;
 
-  const isEssential = type === 'essential';
+  const isEssential = type === "essential";
   const hasError = isEssential && touched && !selected;
   const hasValue = !!selected;
 

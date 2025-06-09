@@ -10,7 +10,13 @@ const CardListWrap = styled.div`
   gap: 12px;
 `;
 
-function PositionCardList({ cards = [], mode = "single", onSelect, purpose, onChange }) {
+function PositionCardList({
+  cards = [],
+  mode = "single",
+  onSelect,
+  purpose,
+  onChange,
+}) {
   const [selected, setSelected] = useState([]);
   const [cardList, setCardList] = useState(cards);
 
@@ -34,12 +40,11 @@ function PositionCardList({ cards = [], mode = "single", onSelect, purpose, onCh
     setCardList(cards);
   }, [cards]);
 
- const handleDelete = (index) => {
-  const newCardList = cardList.filter((_, i) => i !== index);
-  setCardList(newCardList);
-  if (onChange) onChange(newCardList);
-};
-
+  const handleDelete = (index) => {
+    const newCardList = cardList.filter((_, i) => i !== index);
+    setCardList(newCardList);
+    if (onChange) onChange(newCardList);
+  };
 
   return (
     <CardListWrap>

@@ -1,12 +1,13 @@
 import styled from "styled-components";
+import { theme } from "../styles/theme";
 
 const ItemWrap = styled.div`
   width: 100%;
   max-width: 362px;
   padding: 12px;
   max-height: 48px;
-  border-radius: ${({ theme }) => theme.radius.small};
-  background-color: ${({ theme }) => theme.colors.gray[100]};
+  border-radius: ${theme.radius.small};
+  background-color: ${theme.colors.gray[100]};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -18,7 +19,7 @@ const TextWrap = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: ${({ theme }) => theme.colors.gray[800]};
+  color: ${theme.colors.gray[800]};
 `;
 
 const ProfileImg = styled.img`

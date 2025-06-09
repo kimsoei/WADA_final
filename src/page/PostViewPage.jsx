@@ -65,7 +65,7 @@ function PostViewpage() {
 
   return (
     <PageWrapper>
-      <Header type="back" title="모집글" backTo="/post" />
+      <Header type="back" title="파티 모집" backTo="/post" />
       <ScrollableArea>
         <PostContainer
           post={post}
@@ -75,7 +75,7 @@ function PostViewpage() {
       </ScrollableArea>
       <ActionBtnWrapper>
         <ActionBtn
-          btnName={"지원하기"}
+          btnName={"지원"}
           type={isPositionSelected ? "default" : "disabled"}
           onClick={() => {
             if (isPositionSelected) {

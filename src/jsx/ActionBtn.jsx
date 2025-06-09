@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { theme } from "../styles/theme";
 
 const ActionButton = styled.button`
   width: 100%;
   max-width: 362px;
   max-height: 54px;
   padding: 16px 10px;
-  border-radius: ${({ theme }) => theme.radius.small};
+  border-radius: ${theme.radius.small};
   font-size: 16px;
   font-weight: 600;
   line-height: 22px;
