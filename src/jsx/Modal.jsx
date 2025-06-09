@@ -47,8 +47,8 @@ function Modal({id, post}){
         db.collection('post').doc(id).delete().then(function(){alert('삭제되었습니다.'); navigate("/post");})
     }
 
-    const handeEdit = () =>{
-        navigate("/post/write", {
+    const handleEdit = () =>{
+        navigate(`/post/write/${id}`, {
             state: {
                 id: id,
                 data: post
@@ -58,7 +58,7 @@ function Modal({id, post}){
 
     return(
         <ModalCon>
-            <EditCon onClick={handeEdit}>
+            <EditCon onClick={handleEdit}>
                 <p>수정하기</p>
             </EditCon>
              <DeleteCon onClick={handleDelete}>

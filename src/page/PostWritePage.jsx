@@ -15,6 +15,8 @@ import BottomSheet from "../jsx/BottomSheet";
 import PositionCardList from "../jsx/PositionCardList";
 import DatePicker from "../jsx/DatePicker";
 
+import { useParams } from "react-router-dom";
+
 const Scrim = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
@@ -82,7 +84,30 @@ export default function PostWritePage() {
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
   // <= 바텀시트 , 스크림 제어용
 
-        const [profile, setProfile] = useState(null);
+  const { id } = useParams();
+  useEffect(() => {
+  if (id) {
+    db.collection("post").doc(id).get().then((doc) => {
+      if (doc.exists) {
+        const postData = doc.data();
+        setFormData({
+          topic: postData.topic || "",
+          category: postData.category || "",
+          purpose: postData.purpose || [],
+          status: postData.status || "",
+          description: postData.description || "",
+          positions: postData.positions || [],
+          projectDate: postData.projectDate || [],
+        });   
+
+        setEditPositionCards(postData.positions || []);
+      }
+    });
+  }
+}, [id]);
+// <-여기까진 수정
+
+      const [profile, setProfile] = useState(null);
 
       useEffect(() => {
         db.collection("profile").get().then((qs) => {
@@ -91,6 +116,8 @@ export default function PostWritePage() {
           setProfile(data[0] || null);
         });
       }, []);
+
+      const [editpositionCards, setEditPositionCards] = useState([]);
 
   const [formData, setFormData] = useState({
     topic: "",
@@ -112,30 +139,43 @@ export default function PostWritePage() {
   // recruitdetail??이게 먼지 모르겠어서 일단 포지션카드의 개수로 바꿨으여 positions는 포지션별 데이토에요요
   const positionCardLimit = formData.positions.length >= 3;
 
-  const handleNext = () => {
-    if (step === 1 && isStep1Valid) {
-      setStep(2);
-    } else if (step === 2 && isStep2Valid) {
-      console.log("신청 데이터:", formData);
+ const handleNext = () => {
+  if (step === 1 && isStep1Valid) {
+    setStep(2);
+    return; // step 1이면 여기서 끝
+  }
 
-      // 여기서부터 파베 추가입니다!
-      let timestamp = new Date().getTime().toString();
-
-      db.collection("post")
-        .doc(timestamp)
-        .set({
-          id: timestamp,
-          date: Date.now(),
-          viewCount: 0,
-          author: profile?.name || "익명",
-          ...formData,
-        })
-        .then(() => {
-          alert("성공이길.. 제발..!");
-          navigate("/post");
-        });
+  if (step === 2 && isStep2Valid) {
+    if (id) {
+      // 수정일 경우 update만 실행하고 return으로 마무리
+      db.collection("post").doc(id).update(formData).then(() => {
+        alert("수정 완료!");
+        navigate("/post");
+      });
+      return;
     }
-  };
+
+    // 작성일 경우 set 실행
+    const timestamp = new Date().getTime().toString();
+
+    db.collection("post")
+      .doc(timestamp)
+      .set({
+        id: timestamp,
+        date: Date.now(),
+        viewCount: 0,
+        author: profile?.name || "익명",
+        ...formData,
+      })
+      .then(() => {
+        alert("작성 완료!");
+        navigate("/post");
+      });
+  }
+};
+
+  const [editedpositionCards, setEditedPositionCards] = useState([]);
+
 
   return (
     <>
@@ -246,13 +286,21 @@ export default function PostWritePage() {
             </StepOneWrap>
           ) : (
             <StepTwoWrap>
-              <PositionCardList
-                cards={formData.positions.map((pos) => ({
-                  title: `${pos.position}`,
-                  skills: pos.stack,
-                }))}
-                mode="single"
-              />
+             <PositionCardList
+  cards={formData.positions.map((pos) => ({
+    title: pos.position,
+    skills: pos.stack,
+  }))}
+  mode="single"
+  purpose="show"
+  onChange={(newList) => {
+    const updatedPositions = newList.map(({ title, skills }) => ({
+      position: title,
+      stack: skills,
+    }));
+    setFormData({ ...formData, positions: updatedPositions });
+  }}
+/>
               <ActionBtn
                 type={positionCardLimit ? "disabled" : "outline"}
                 btnName="+ 파티원 추가"
@@ -266,7 +314,7 @@ export default function PostWritePage() {
 
         <div className="writeActionBtn">
           <ActionBtn
-            btnName={step === 2 ? "완료" : "다음"}
+            btnName={step === 1 ? "다음" : id ? "수정 완료" : "작성 완료"}
             onClick={handleNext}
             type={
               step === 1

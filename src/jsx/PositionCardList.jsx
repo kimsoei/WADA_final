@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import PositionCard from "./PositionCard";
+import { useEffect } from "react";
 
 const CardListWrap = styled.div`
   display: flex;
@@ -9,8 +10,9 @@ const CardListWrap = styled.div`
   gap: 12px;
 `;
 
-function PositionCardList({ cards = [], mode = "single", onSelect }) {
+function PositionCardList({ cards = [], mode = "single", onSelect, purpose, onChange }) {
   const [selected, setSelected] = useState([]);
+  const [cardList, setCardList] = useState(cards);
 
   const positionClick = (index) => {
     if (mode === "single") {
@@ -28,9 +30,20 @@ function PositionCardList({ cards = [], mode = "single", onSelect }) {
     }
   };
 
+  useEffect(() => {
+    setCardList(cards);
+  }, [cards]);
+
+ const handleDelete = (index) => {
+  const newCardList = cardList.filter((_, i) => i !== index);
+  setCardList(newCardList);
+  if (onChange) onChange(newCardList);
+};
+
+
   return (
     <CardListWrap>
-      {cards.map((card, index) => {
+      {cardList.map((card, index) => {
         let type = "default";
         if (mode === "single") {
           if (selected.length > 0) {
@@ -47,6 +60,8 @@ function PositionCardList({ cards = [], mode = "single", onSelect }) {
             title={card.title}
             skills={card.skills}
             onClick={() => positionClick(index)}
+            onDelete={() => handleDelete(index)}
+            purpose={purpose}
           />
         );
       })}

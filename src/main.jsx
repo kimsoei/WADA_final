@@ -27,7 +27,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/" element={<MainPage />} />
             <Route path="/post" element={<PostPage />} />
             <Route path="/post/write" element={<PostWritePage />} />
-            <Route path="/post/write/:id" element={<ProfileWritePage />} />
+            <Route path="/post/write/:id" element={<PostWritePage />} />
             <Route path="/post/:id" element={<PostViewpage />} />
             <Route path="/party" element={<PartyPage />} />
             <Route path="/author/:id" element={<AuthorPage />} />

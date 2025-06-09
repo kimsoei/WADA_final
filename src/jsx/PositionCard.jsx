@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import CheckIcon from "../assets/icons/check.svg?react";
+import XIcon from "../assets/icons/X.svg?react";
 
 const CardWrap = styled.div.attrs({ role: "button" })`
   max-width: 362px;
@@ -59,9 +60,19 @@ const StyledCheck = styled.div`
   }
 `;
 
-function PositionCard({ type = "default", title = "", skills = "", onClick }) {
+function PositionCard({ type = "default", title = "", skills = "", onClick, onDelete, purpose = "default" }) {
+
+   const handlePurpose = () => {
+    if (purpose === "default") {
+      onClick();
+    } else if (purpose === "show") {
+      onDelete();
+    }
+  };
+
+  
   return (
-    <CardWrap type={type} onClick={onClick}>
+    <CardWrap type={type} onClick={handlePurpose}>
       <TextWrap>
         <Title type={type}>{title}</Title>
         <SubText type={type}>
@@ -69,7 +80,7 @@ function PositionCard({ type = "default", title = "", skills = "", onClick }) {
         </SubText>
       </TextWrap>
       <StyledCheck type={type}>
-        <CheckIcon />
+        {purpose === "show" ? <XIcon /> : <CheckIcon />}
       </StyledCheck>
     </CardWrap>
   );

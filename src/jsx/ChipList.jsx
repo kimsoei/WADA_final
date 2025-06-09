@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const ChipCon = styled.div`
     height:auto;
 `
-
 const Title = styled.p`
     font-size: 18px;
     font-weight: 600;
@@ -16,7 +15,6 @@ const SubText = styled.p`
     font-size: 14px;
     color: ${({ theme }) => theme.colors.gray[600]};
 `;
-
 
 const TitleWrap = styled.div`
     display:flex;
