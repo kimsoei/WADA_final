@@ -77,10 +77,11 @@ const StepOneWrap = styled.div`
 `;
 
 const StepTwoWrap = styled.div`
+padding-top: 24px;
   height: 472px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   margin-bottom: 64px;
 `;
 
@@ -93,8 +94,9 @@ export default function PostWritePage() {
   const [step, setStep] = useState(1);
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
   // <= 바텀시트 , 스크림 제어용
-
+  const [profile, setProfile] = useState(null);
   const { id } = useParams();
+
   useEffect(() => {
   if (id) {
     db.collection("post").doc(id).get().then((doc) => {
@@ -116,8 +118,6 @@ export default function PostWritePage() {
   }
 }, [id]);
 // <-여기까진 수정
-
-      const [profile, setProfile] = useState(null);
 
       useEffect(() => {
         db.collection("profile").get().then((qs) => {

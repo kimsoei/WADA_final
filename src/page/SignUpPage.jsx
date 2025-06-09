@@ -1,13 +1,17 @@
-import { useLocation, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import SignUpContainer from "../jsx/SignUpContainer";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../jsx/Header";
 import ActionBtn from "../jsx/ActionBtn";
 import styled from "styled-components";
+import SignUpContainer from "../jsx/SignUpContainer";
+import { db } from "../firebase";
+import { useEffect, useState } from "react";
 
 const ActionBtnWrapper = styled.div`
   background-color: #fff;
   padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
 `;
 
 const PageWrapper = styled.div`
@@ -33,22 +37,59 @@ const ScrollableArea = styled.div`
 function SignUpPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
-
   const { post, selectedPosition } = state;
+  const [message, setMessage] = useState("");
+  const [profile, setProfile] = useState(null);
+
+  
+  useEffect(() => {
+    db.collection("profile").get().then((qs) => {
+      const data = [];
+      qs.forEach((doc) => data.push(doc.data()));
+      setProfile(data[0] || null);
+    });
+  }, []);
+
+  const handleApply = () => {
+    if (!profile) return alert("프로필 정보를 불러오는 중입니다.");
+
+    db.collection("applications")
+      .add({
+        postId: post.id,
+        applicantName: profile.name,
+        profile,
+        message,
+        position: selectedPosition,
+        createdAt: new Date(),
+      })
+      .then(() => {
+        alert("지원이 완료되었습니다.");
+        navigate("/post");
+      });
+  };
 
   return (
     <PageWrapper>
       <Header type="back" title="모집글" backTo="/post" />
       <ScrollableArea>
-        <SignUpContainer post={post} selectedPosition={selectedPosition} />
+        <SignUpContainer
+          post={post}
+          selectedPosition={selectedPosition}
+          profile={profile}
+          message={message}
+          setMessage={setMessage}
+        />
       </ScrollableArea>
       <ActionBtnWrapper>
+          <ActionBtn
+          btnName={"취소"}
+          type="outline"
+          onClick={() => navigate("/party")}
+        />
         <ActionBtn
-          btnName={"지원하기"}
+          btnName={"지원"}
           type="default"
-          onClick={() => {
-            navigate(`/post`);
-          }}
+          onClick={handleApply}
         />
       </ActionBtnWrapper>
     </PageWrapper>

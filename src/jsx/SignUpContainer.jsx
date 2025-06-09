@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import ProfileCard from "./ProfileCard";
 import InputText from "./InputText";
-import { useEffect, useState } from "react";
-import { db } from "../firebase";
 
 const PositionWrapper = styled.div`
   background: #fff;
@@ -59,20 +57,8 @@ const PageWrapper = styled.div`
   gap: 8px;
 `;
 
-function SignUpContainer({ post, selectedPosition }) {
-  const [profile, setProfile] = useState(null);
-  const [signUpData, setSignUpData] = useState("");
 
-  useEffect(() => {
-    db.collection("profile")
-      .get()
-      .then((qs) => {
-        const data = [];
-        qs.forEach((doc) => data.push(doc.data()));
-        setProfile(data.length > 0 ? data[0] : null);
-      });
-  }, []);
-
+function SignUpContainer({ selectedPosition, profile, message, setMessage }) {
   return (
     <PageWrapper>
       <PositionWrapper>
@@ -91,13 +77,14 @@ function SignUpContainer({ post, selectedPosition }) {
           title="자유로운 한 마디"
           placeholder="자유로운 한 마디를 적어주세요."
           type="default"
-          topic={true}
-          value={signUpData}
-          onChange={setSignUpData}
+          topic={false}
+          value={message}
+          onChange={setMessage}
         />
       </InputWrapper>
     </PageWrapper>
   );
 }
+
 
 export default SignUpContainer;

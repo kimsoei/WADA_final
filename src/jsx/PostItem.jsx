@@ -116,6 +116,10 @@ const ViewImg = styled.img`
   height: 16px;
 `;
 
+const ActionArea = styled.div`
+  display: flex;
+`;
+
 function getDeadlineText(timestamp) {
   const today = new Date();
   const target = new Date(timestamp);
@@ -133,6 +137,7 @@ function PostItem({
   positions = [],
   onClick,
   projectDate,
+  notice,
 }) {
   const positionSkills = [...new Set(positions.flatMap((p) => p.stack))];
   // -> 기술스택 중복 제거용 가공 코드 positions.stack 에서 중복 제거된 데이터가 positionSkills입ㅂ니다!
@@ -174,7 +179,6 @@ function PostItem({
       </PostBox>
 
       {type === "postList" || type === "homeList" ? <BlankLine /> : null}
-
       {type === "postList" || type === "homeList" ? (
         <AuthorInfo>
           <AuthorWrap>
@@ -189,8 +193,27 @@ function PostItem({
       ) : null}
 
       {type === "partyList" && (
-        <ActionBtn type="outline" btnName="지원자 확인하기" />
+        <ActionBtn type="outline" btnName="지원자 확인" />
       )}
+
+      {type === "appliedList" && (
+              <ActionArea>
+                {notice === "rejected" ? (
+                  <ActionBtn
+                    btnName="반려"
+                    type="disabled"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ) : (
+                  <ActionBtn
+                    btnName={notice === "accepted" ? "승인 완료" : "승인 대기 중"}
+                    type={notice === "accepted" ? "default" : "outline"}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                )}
+              </ActionArea>
+            )}
+
     </PostWrap>
   );
 }

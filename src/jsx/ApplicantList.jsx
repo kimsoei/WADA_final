@@ -7,27 +7,28 @@ const ListWrap = styled.div`
     gap: 8px;
 `;
 
-export default function ApplicantList({ applicants = [] }) {
+export default function ApplicantList({ applicants = [], onClickItem }) {
     return (
         <ListWrap>
         {applicants.length === 0 ? (
-            <div style={{
-            padding: "16px",
-            backgroundColor: "#F0F0F0",
-            borderRadius: "8px",
-            color: "#999",
-            textAlign: "center"
-            }}>
-            아직 지원자가 없어요
-            </div>
+            <ApplicantListItem type="not" />
         ) : (
-            applicants.map((applicant, index) => (
-            <ApplicantListItem
+            applicants.map((applicant, index) => {
+            let type = "default";
+            if (applicant.notice === "rejected") type = "disabled";
+            if (applicant.notice === "accepted") type = "default";
+            if (!applicant.notice || applicant.notice === "wait") type = "default";
+
+            return (
+                <ApplicantListItem
                 key={index}
-                imageUrl={applicant.imageUrl}
-                name={applicant.name}
-            />
-            ))
+                imageUrl={applicant.profile?.imageUrl}
+                name={applicant.profile?.name}
+                type={type}
+                onClick={() => onClickItem(applicant)}
+                />
+            );
+            })
         )}
         </ListWrap>
     );

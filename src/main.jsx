@@ -15,6 +15,8 @@ import PostWritePage from "./page/PostWritePage";
 import PostViewpage from "./page/PostViewPage";
 import ProfileWritePage from "./page/ProfileWritePage";
 import SignUpPage from "./page/SignUpPage";
+import SignUpViewPage from "./page/SignUpViewPage";
+
 
 import AppPreview from "./AppPreview";
 
@@ -34,6 +36,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/write" element={<ProfileWritePage />} />
             <Route path="/post/:id/signup" element={<SignUpPage />} />
+            <Route path="/signup/view/:id" element={<SignUpViewPage />} />
           </Routes>
         </AppPreview>
       </Router>
