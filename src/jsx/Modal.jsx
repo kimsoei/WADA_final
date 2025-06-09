@@ -39,7 +39,7 @@ const DeleteCon = styled.div`
     cursor: pointer;
 `
 
-function Modal({id}){
+function Modal({id, post}){
 
     const navigate = useNavigate();
 
@@ -47,9 +47,18 @@ function Modal({id}){
         db.collection('post').doc(id).delete().then(function(){alert('삭제되었습니다.'); navigate("/post");})
     }
 
+    const handeEdit = () =>{
+        navigate("/post/write", {
+            state: {
+                id: id,
+                data: post
+            }
+        });
+    }
+
     return(
         <ModalCon>
-            <EditCon>
+            <EditCon onClick={handeEdit}>
                 <p>수정하기</p>
             </EditCon>
              <DeleteCon onClick={handleDelete}>

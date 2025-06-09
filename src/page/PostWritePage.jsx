@@ -208,17 +208,29 @@ export default function PostWritePage() {
                   essential={false}
                   value={formData.status}
                   onChange={(val) => setFormData({ ...formData, status: val })}
+                  popperPlacement="bottom-start"
                 />
               </div>
 
-              <div>
+              <div className="DateRealative">
                 <DatePicker
-                  title="프로젝트 기간"
-                  value={formData.projectDate}
-                  onChange={(val) =>
-                    setFormData({ ...formData, projectDate: val })
-                  }
-                ></DatePicker>
+                  selected={formData.projectDate?.[0] || null}
+                  onChange={(dates) => setFormData({ ...formData, projectDate: dates })}
+                  startDate={formData.projectDate?.[0] || null}
+                  endDate={formData.projectDate?.[1] || null}
+                  selectsRange
+                  placeholderText="기간 선택"
+                  dateFormat="yyyy.MM.dd"
+                  popperPlacement="bottom"
+                  popperModifiers={[
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [0, 10],
+                      },
+                    },
+                  ]}
+                />
               </div>
 
               <InputText
