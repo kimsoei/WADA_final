@@ -163,6 +163,10 @@ const InformationWrapper = styled.div`
     font-weight: 600;
     line-height: 150%;
   }
+
+  & > .text {
+    color: ${theme.colors.gray[600]};
+  }
 `;
 
 const DescriptionWrapper = styled.div`
@@ -230,7 +234,7 @@ function getDeadlineText(timestamp) {
   return ` 마감 D-${dayDiff}일`;
 }
 function PostContainer(props) {
-  const { post, setIsPositionSelected } = props;
+  const { post, setIsPositionSelected, setSelectedPosition } = props;
 
   const postId = useParams().id;
 
@@ -285,7 +289,7 @@ function PostContainer(props) {
     return (
       <InformationWrapper>
         <p className="title">{label}</p>
-        <p>{value}</p>
+        <p className="text">{value}</p>
       </InformationWrapper>
     );
   };
@@ -359,7 +363,7 @@ function PostContainer(props) {
             mode="single"
             onSelect={(selectedCard) => {
               setIsPositionSelected?.(true);
-              props.setSelectedPosition?.(selectedCard);
+              setSelectedPosition?.(selectedCard);
             }}
           />
         </PositionWrapper>
@@ -368,7 +372,14 @@ function PostContainer(props) {
       <SectionWrapper ref={refInformation} data-section="정보">
         <InformationsWrapper>
           <InfoItem label="카테고리" value={post.category} />
-          <InfoItem label="목적" value={post.purpose} />
+          <InfoItem
+            label="목적"
+            value={
+              Array.isArray(post.purpose)
+                ? post.purpose.join(" · ")
+                : post.purpose
+            }
+          />
           {post.status && <InfoItem label="현황" value={post.status} />}
           {post.projectDate?.[0]?.toDate && post.projectDate?.[1]?.toDate && (
             <InfoItem
