@@ -41,13 +41,14 @@ function SignUpPage() {
   const [message, setMessage] = useState("");
   const [profile, setProfile] = useState(null);
 
-  
   useEffect(() => {
-    db.collection("profile").get().then((qs) => {
-      const data = [];
-      qs.forEach((doc) => data.push(doc.data()));
-      setProfile(data[0] || null);
-    });
+    db.collection("profile")
+      .get()
+      .then((qs) => {
+        const data = [];
+        qs.forEach((doc) => data.push(doc.data()));
+        setProfile(data[0] || null);
+      });
   }, []);
 
   const handleApply = () => {
@@ -70,10 +71,9 @@ function SignUpPage() {
 
   return (
     <PageWrapper>
-      <Header type="back" title="모집글" backTo="/post" />
+      <Header type="back" title="신청" backTo="/post" />
       <ScrollableArea>
         <SignUpContainer
-          post={post}
           selectedPosition={selectedPosition}
           profile={profile}
           message={message}
@@ -81,16 +81,12 @@ function SignUpPage() {
         />
       </ScrollableArea>
       <ActionBtnWrapper>
-          <ActionBtn
+        <ActionBtn
           btnName={"취소"}
           type="outline"
           onClick={() => navigate("/party")}
         />
-        <ActionBtn
-          btnName={"지원"}
-          type="default"
-          onClick={handleApply}
-        />
+        <ActionBtn btnName={"지원"} type="default" onClick={handleApply} />
       </ActionBtnWrapper>
     </PageWrapper>
   );

@@ -269,7 +269,6 @@ function PostContainer(props) {
             .update({
               viewCount: currentView + 1,
             });
-          // 조회수 부분이에여
         }
         const data = doc.data();
 

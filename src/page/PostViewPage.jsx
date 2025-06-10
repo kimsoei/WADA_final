@@ -51,7 +51,6 @@ function PostViewpage() {
   });
 
   const [isPositionSelected, setIsPositionSelected] = useState(false);
-
   const [selectedPosition, setSelectedPosition] = useState(null);
 
   useEffect(() => {
