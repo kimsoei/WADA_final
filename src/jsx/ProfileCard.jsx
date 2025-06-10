@@ -35,13 +35,8 @@ const PersonalText = styled.div`
 const IconBox = styled.div`
   width: 70px;
   height: 70px;
-  background-color: #222;
   border-radius: 36px;
-
-  background-image: url("/DesignerProfile.svg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  overflow: hidden;
 `;
 
 const Name = styled.p`
@@ -121,23 +116,36 @@ function ProfileCard({ profileData }) {
     );
   }
 
-  let TaskIcon = "/designer.svg";
-  if (profileData.task === "디자이너") {
-    TaskIcon = "/designer.svg";
-  } else if (profileData.task === "개발자") {
-    TaskIcon = "/programmer.svg";
-  } else if (profileData.task === "기획자") {
-    TaskIcon = "/productmanager.svg";
-  }
+  const TASK_ICONS = {
+    디자이너: "/designer.svg",
+    개발자: "/programmer.svg",
+    기획자: "/productmanager.svg",
+  };
+
+  const PROFILE_ICONS = {
+    디자이너: "/designerProfile.svg",
+    개발자: "/programmerProfile.svg",
+    기획자: "/productmanagerProfile.svg",
+  };
+
+  const TaskIcon = TASK_ICONS[profileData.task] || "/designer.svg";
+  const ProfileIcon = PROFILE_ICONS[profileData.task] || "/designerProfile.svg";
 
   console.log({ TaskIcon });
+  console.log("task:", `"${profileData.task}"`);
 
   return (
     <>
       <CardWrap>
-        <img src="/Tag.svg" style={{ width: "24px" }}></img>
+        <img src="./Tag.svg" style={{ width: "24px" }}></img>
         <PersonalBox>
-          <IconBox></IconBox>
+          <IconBox>
+            <img
+              src={ProfileIcon}
+              alt="프로필 아이콘"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </IconBox>
           <PersonalText>
             <Name>{profileData.name}</Name>
             <Enroll>{profileData.enroll}</Enroll>
