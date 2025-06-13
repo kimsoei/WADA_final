@@ -17,13 +17,12 @@ import ProfileWritePage from "./page/ProfileWritePage";
 import SignUpPage from "./page/SignUpPage";
 import SignUpViewPage from "./page/SignUpViewPage";
 
-
 import AppPreview from "./AppPreview";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         <AppPreview>
           <Routes>
             <Route path="/" element={<MainPage />} />
