@@ -41,7 +41,8 @@ const IconBtn = styled.img`
   height: 20px;
 `;
 
-const DefaultImg = import.meta.env.BASE_URL + "/vite.svg";
+const getImagePath = (filename) => `${import.meta.env.BASE_URL}${filename}`;
+const DefaultImg = getImagePath("/designerProfile.svg");
 
 function ApplicantListItem({ imageUrl, name, onClick, type = "default" }) {
   if (type === "not") {
@@ -55,10 +56,13 @@ function ApplicantListItem({ imageUrl, name, onClick, type = "default" }) {
   return (
     <ItemWrap onClick={type !== "disabled" ? onClick : undefined} type={type}>
       <TextWrap>
-        <ProfileImg src={imageUrl || DefaultImg} />
+        <ProfileImg src={imageUrl ? getImagePath(imageUrl) : DefaultImg} />
         <UserName>{name || "신청자"}</UserName>
       </TextWrap>
-      <IconBtn src="/arrow_right.svg" alt="보기 버튼" />
+      <IconBtn
+        src={import.meta.env.BASE_URL + "/arrow_right.svg"}
+        alt="보기 버튼"
+      />
     </ItemWrap>
   );
 }
