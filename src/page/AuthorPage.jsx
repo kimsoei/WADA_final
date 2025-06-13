@@ -65,10 +65,30 @@ export default function AuthorPage() {
         .where("postId", "==", id)
         .get();
 
-      const applicants = snapshot.docs.map((doc) => ({
-        applicationId: doc.id,
-        ...doc.data(),
-      }));
+      const applicants = [];
+
+      for (const doc of snapshot.docs) {
+        const data = doc.data();
+        let imageUrl = null;
+
+        if (data?.name) {
+          const profileSnap = await db
+            .collection("profile")
+            .where("name", "==", data.name)
+            .get();
+
+          if (!profileSnap.empty) {
+            const profileData = profileSnap.docs[0].data();
+            imageUrl = profileData.imageUrl || null;
+          }
+        }
+
+        applicants.push({
+          applicationId: doc.id,
+          ...data,
+          imageUrl,
+        });
+      }
 
       const grouped = {};
       applicants.forEach((app) => {
