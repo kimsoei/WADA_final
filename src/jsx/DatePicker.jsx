@@ -57,7 +57,7 @@ const PickerBox = styled.div`
 const CalendarIcon = styled.i`
   width: 20px;
   height: 20px;
-  background-image: url(${import.meta.env.BASE_URL + "/calendar.svg"});
+  background-image: url(${(props) => props.$icon});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -71,7 +71,7 @@ const DefaultDate = styled.p`
 const CustomDateInput = forwardRef(({ value, onClick }, ref) => (
   <PickerBox onClick={onClick} ref={ref}>
     <DefaultDate>{value}</DefaultDate>
-    <CalendarIcon />
+    <CalendarIcon $icon={`${import.meta.env.BASE_URL}calendar.svg`} />
   </PickerBox>
 ));
 
