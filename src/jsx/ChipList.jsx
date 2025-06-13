@@ -84,7 +84,12 @@ function ChipList({
     <ChipCon>
       <TitleWrap>
         <Title>{title}</Title>
-        {isEssential && <EssentialIcon src="/essential.svg" alt="필수 입력" />}
+        {isEssential && (
+          <EssentialIcon
+            src={import.meta.env.BASE_URL + "/essential.svg"}
+            alt="필수 입력"
+          />
+        )}
       </TitleWrap>
 
       {subtext && <SubText>{subtext}</SubText>}
