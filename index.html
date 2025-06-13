@@ -1,11 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="kr">
   <head>
+    <script type="text/javascript">
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      })(window.location);
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/WADA_final/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parple.</title>
-    <script type="module" crossorigin src="/WADA_final/assets/index-D_5izU8s.js"></script>
+    <script type="module" crossorigin src="/WADA_final/assets/index-DzU_tkPD.js"></script>
     <link rel="stylesheet" crossorigin href="/WADA_final/assets/index-DxyWQAe0.css">
   </head>
   <body>
