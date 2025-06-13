@@ -184,7 +184,9 @@ function PostItem({
       {type === "postList" || type === "homeList" ? (
         <AuthorInfo>
           <AuthorWrap>
-            <AuthorImg src={authorImageUrl || "/vite.svg"} />
+            <AuthorImg
+              src={authorImageUrl || import.meta.env.BASE_URL + "/vite.svg"}
+            />
             <AuthorName>{author || "작성자"}</AuthorName>
           </AuthorWrap>
           <ViewCountWrap>

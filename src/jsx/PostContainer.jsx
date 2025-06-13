@@ -334,12 +334,7 @@ function PostContainer(props) {
 
         <AuthorInfo>
           <AuthorWrap>
-            <AuthorImg
-              src={
-                import.meta.env.BASE_URL +
-                "https://i.postimg.cc/SNDGP9x1/image.png"
-              }
-            />
+            <AuthorImg src={"https://i.postimg.cc/SNDGP9x1/image.png"} />
             <AuthorName>{post.author || "작성자"}</AuthorName>
           </AuthorWrap>
           <ViewCountWrap>
