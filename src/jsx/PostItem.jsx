@@ -134,6 +134,7 @@ function PostItem({
   category,
   topic,
   author,
+  authorImageUrl,
   viewCount,
   positions = [],
   onClick,
@@ -183,7 +184,7 @@ function PostItem({
       {type === "postList" || type === "homeList" ? (
         <AuthorInfo>
           <AuthorWrap>
-            <AuthorImg src="https://i.postimg.cc/SNDGP9x1/image.png" />
+            <AuthorImg src={authorImageUrl || "/vite.svg"} />
             <AuthorName>{author || "작성자"}</AuthorName>
           </AuthorWrap>
           <ViewCountWrap>

@@ -58,7 +58,10 @@ function SignUpPage() {
       .add({
         postId: post.id,
         applicantName: profile.name,
-        profile,
+        profile: {
+          ...profile,
+          imageUrl: profile.imageUrl || "", 
+        },
         message,
         position: selectedPosition,
         createdAt: new Date(),

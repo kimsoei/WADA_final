@@ -20,7 +20,7 @@ const SheetCon = styled.div`
   overflow-y: hidden;
 
   position: absolute;
-  bottom: 0;
+  bottom: -20px;
   left: 0;
 
   z-index: 1000;

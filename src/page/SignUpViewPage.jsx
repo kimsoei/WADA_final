@@ -50,10 +50,18 @@ export default function SignUpViewPage() {
   const { profile, message = "", position, applicationId } = state || {};
 
   const handleNoticeChange = async (newStatus) => {
+
+    const statusMessages = {
+      accepted: "지원자를 승인했어요!",
+      rejected: "지원자를 반려했어요.",
+    };
+
+
     await db.collection("applications").doc(applicationId).update({
       notice: newStatus,
     });
-    alert(`지원 상태가 '${newStatus}'로 변경되었습니다.`);
+
+    alert(statusMessages[newStatus] || "신청을 처리했어요.");
     navigate("/party");
   };
 

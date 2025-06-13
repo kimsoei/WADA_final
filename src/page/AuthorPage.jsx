@@ -72,7 +72,7 @@ export default function AuthorPage() {
 
     return (
         <>
-        <Header type="back" title="지원자 확인" />
+        <Header type="back" title="지원자 확인" backTo="/party" />
         <PostContentWrap>
 
             {post && (

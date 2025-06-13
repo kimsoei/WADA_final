@@ -52,6 +52,7 @@ function ProfileWritePage() {
   const [profileData, setProfileData] = useState({
     name: "",
     major: "",
+    imageUrl: '',
     description: "",
     grade: "",
     enroll: "",
@@ -123,10 +124,19 @@ function ProfileWritePage() {
     기획자: ["Notion", "Excel", "Jira", "rello", "Google Analytics", "PPT"],
   };
 
+  const taskToImage = {
+    디자이너: "/designerProfile.svg",
+    개발자: "/programmerProfile.svg",
+    기획자: "/productmanagerProfile.svg",
+  };
+
   const [existingProfileId, setExistingProfileId] = useState(null);
 
   const handleSave = () => {
     const data = { ...profileData };
+    if (data.imageUrl === undefined) {
+      delete data.imageUrl;
+    }
 
     if (existingProfileId) {
       db.collection("profile")
@@ -218,7 +228,13 @@ function ProfileWritePage() {
             mode="single"
             essential={true}
             value={profileData.task}
-            onChange={(val) => setProfileData({ ...profileData, task: val })}
+            onChange={(val) =>
+            setProfileData({
+              ...profileData,
+              task: val,
+              imageUrl: taskToImage[val],
+            })
+          }
           />
 
           <ChipList
@@ -227,9 +243,7 @@ function ProfileWritePage() {
             chips={positionOptions[profileData.task] || []}
             size="large"
             selectedChips={profileData.position}
-            onChange={(val) =>
-              setProfileData({ ...profileData, position: val })
-            }
+            onChange={(val) => setProfileData({ ...profileData, position: val })}
           />
 
           <ChipList

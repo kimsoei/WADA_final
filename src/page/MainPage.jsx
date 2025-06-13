@@ -43,6 +43,34 @@ export default function MainPage() {
       });
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const profileSnap = await db.collection("profile").get();
+      const postSnap = await db.collection("post").get();
+
+      const profileMap = {};
+      profileSnap.forEach((doc) => {
+        const data = doc.data();
+        if (data.name) profileMap[data.name] = data.imageUrl;
+      });
+
+      const result = [];
+      postSnap.forEach((doc) => {
+        const data = doc.data();
+        result.push({
+          id: doc.id,
+          ...data,
+          authorImageUrl: profileMap[data.author] || null,
+        });
+      });
+
+      setPosts(result);
+    };
+
+    fetchData();
+  }, []);
+
+
   return (
     <>
       <Header type="default" badge={false} />

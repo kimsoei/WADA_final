@@ -137,7 +137,7 @@ function ProfileCard({ profileData }) {
   return (
     <>
       <CardWrap>
-        <img src="./Tag.svg" style={{ width: "24px" }}></img>
+        <img src="/Tag.svg" style={{ width: "24px" }}></img>
         <PersonalBox>
           <IconBox>
             <img
