@@ -50,6 +50,7 @@ function PostViewpage() {
     projectDate: [],
   });
 
+  const [authorImageUrl, setAuthorImageUrl] = useState(null);
   const [isPositionSelected, setIsPositionSelected] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState(null);
 
@@ -59,6 +60,19 @@ function PostViewpage() {
       .get()
       .then((doc) => {
         setPost(doc.data());
+
+        const data = doc.data();
+        if (data?.author) {
+          db.collection("profile")
+            .where("name", "==", data.author)
+            .get()
+            .then((profileSnap) => {
+              if (!profileSnap.empty) {
+                const profileData = profileSnap.docs[0].data();
+                setAuthorImageUrl(profileData.imageUrl || null);
+              }
+            });
+        }
       });
   }, []);
 
@@ -68,6 +82,7 @@ function PostViewpage() {
       <ScrollableArea>
         <PostContainer
           post={post}
+          authorImageUrl={authorImageUrl}
           setIsPositionSelected={setIsPositionSelected}
           setSelectedPosition={setSelectedPosition}
         />
