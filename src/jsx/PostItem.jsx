@@ -44,6 +44,9 @@ const Title = styled.h3`
   font-size: 20px;
   font-weight: 700;
   line-height: 150%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: ${theme.colors.gray[800]};
 `;
 
@@ -144,7 +147,7 @@ function PostItem({
   const positionSkills = [...new Set(positions.flatMap((p) => p.stack))];
   // -> 기술스택 중복 제거용 가공 코드 positions.stack 에서 중복 제거된 데이터가 positionSkills입ㅂ니다!
   const positionTasks = [...new Set(positions.flatMap((p) => p.task))];
-  // -> 분야 중복 제거용 가공 코드 positions.stack 에서 중복 제거된 데이터가 positionSkills입ㅂ니다!
+  // -> 분야 중복 제거용 가공 코드 positions.stack 에서 중복 제거된 데이터가 positionSkills입니다!
 
   function formatDate(dateInput) {
     const date = dateInput instanceof Date ? dateInput : new Date(dateInput);

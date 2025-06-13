@@ -11,7 +11,6 @@ import InputDropdown from "../jsx/InputDropdown";
 import SelectBtnWrap from "../jsx/SelectBtnWrap";
 import ActionBtn from "../jsx/ActionBtn";
 
-// 여기서부터 파베 추가입니다!
 import BottomSheet from "../jsx/BottomSheet";
 import PositionCardList from "../jsx/PositionCardList";
 import DatePicker from "../jsx/DatePicker";
@@ -93,7 +92,6 @@ export default function PostWritePage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
-  // <= 바텀시트 , 스크림 제어용
   const [profile, setProfile] = useState(null);
   const { id } = useParams();
 
@@ -120,7 +118,6 @@ export default function PostWritePage() {
         });
     }
   }, [id]);
-  // <-여기까진 수정
 
   useEffect(() => {
     db.collection("profile")
@@ -151,18 +148,16 @@ export default function PostWritePage() {
     formData.description.trim() !== "";
 
   const isStep2Valid = formData.positions.length > 0;
-  // recruitdetail??이게 먼지 모르겠어서 일단 포지션카드의 개수로 바꿨으여 positions는 포지션별 데이토에요요
   const positionCardLimit = formData.positions.length >= 3;
 
   const handleNext = () => {
     if (step === 1 && isStep1Valid) {
       setStep(2);
-      return; // step 1이면 여기서 끝
+      return;
     }
 
     if (step === 2 && isStep2Valid) {
       if (id) {
-        // 수정일 경우 update만 실행하고 return으로 마무리
         db.collection("post")
           .doc(id)
           .update(formData)
@@ -173,7 +168,6 @@ export default function PostWritePage() {
         return;
       }
 
-      // 작성일 경우 set 실행
       const timestamp = new Date().getTime().toString();
 
       db.collection("post")

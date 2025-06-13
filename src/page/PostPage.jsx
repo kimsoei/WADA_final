@@ -8,7 +8,6 @@ import BottomNavigation from "../jsx/BottomNavigation";
 import TabMenu from "../jsx/TabMenu";
 import { theme } from "../styles/theme";
 
-// 여기서 부터 파베 추가입니다!
 import { db } from "../firebase.js";
 import { useEffect, useState } from "react";
 
