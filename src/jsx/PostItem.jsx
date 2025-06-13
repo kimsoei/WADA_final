@@ -154,6 +154,8 @@ function PostItem({
     )}.${String(date.getDate()).padStart(2, "0")}`;
   }
 
+  const getImagePath = (filename) => `${import.meta.env.BASE_URL}${filename}`;
+
   return (
     <PostWrap onClick={onClick} type={type}>
       <PostBox>
@@ -185,7 +187,11 @@ function PostItem({
         <AuthorInfo>
           <AuthorWrap>
             <AuthorImg
-              src={authorImageUrl || import.meta.env.BASE_URL + "/vite.svg"}
+              src={
+                authorImageUrl
+                  ? getImagePath(authorImageUrl)
+                  : getImagePath("/designerProfile.svg")
+              }
             />
             <AuthorName>{author || "작성자"}</AuthorName>
           </AuthorWrap>
