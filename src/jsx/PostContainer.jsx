@@ -234,7 +234,8 @@ function getDeadlineText(timestamp) {
   return ` 마감 D-${dayDiff}일`;
 }
 function PostContainer(props) {
-  const { post, setIsPositionSelected, setSelectedPosition } = props;
+  const { post, setIsPositionSelected, setSelectedPosition, authorImageUrl } =
+    props;
 
   const postId = useParams().id;
 
@@ -295,6 +296,8 @@ function PostContainer(props) {
 
   const [modalOn, setModalOn] = useState(false);
 
+  const getImagePath = (filename) => `${import.meta.env.BASE_URL}${filename}`;
+
   return (
     <PageWrapper>
       <TitleWrapper>
@@ -334,7 +337,13 @@ function PostContainer(props) {
 
         <AuthorInfo>
           <AuthorWrap>
-            <AuthorImg src={"https://i.postimg.cc/SNDGP9x1/image.png"} />
+            <AuthorImg
+              src={
+                authorImageUrl
+                  ? getImagePath(authorImageUrl)
+                  : getImagePath("/designerProfile.svg")
+              }
+            />
             <AuthorName>{post.author || "작성자"}</AuthorName>
           </AuthorWrap>
           <ViewCountWrap>
