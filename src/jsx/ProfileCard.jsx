@@ -117,15 +117,15 @@ function ProfileCard({ profileData }) {
   }
 
   const TASK_ICONS = {
-    디자이너: "/designer.svg",
-    개발자: "/programmer.svg",
-    기획자: "/productmanager.svg",
+    디자이너: import.meta.env.BASE_URL + "/designer.svg",
+    개발자: import.meta.env.BASE_URL + "/programmer.svg",
+    기획자: import.meta.env.BASE_URL + "/productmanager.svg",
   };
 
   const PROFILE_ICONS = {
-    디자이너: "/designerProfile.svg",
-    개발자: "/programmerProfile.svg",
-    기획자: "/productmanagerProfile.svg",
+    디자이너: import.meta.env.BASE_URL + "/designerProfile.svg",
+    개발자: import.meta.env.BASE_URL + "/programmerProfile.svg",
+    기획자: import.meta.env.BASE_URL + "/productmanagerProfile.svg",
   };
 
   const TaskIcon =
@@ -140,7 +140,10 @@ function ProfileCard({ profileData }) {
   return (
     <>
       <CardWrap>
-        <img src="/Tag.svg" style={{ width: "24px" }}></img>
+        <img
+          src={import.meta.env.BASE_URL + "/Tag.svg"}
+          style={{ width: "24px" }}
+        ></img>
         <PersonalBox>
           <IconBox>
             <img
