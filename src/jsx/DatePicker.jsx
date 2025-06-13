@@ -57,7 +57,7 @@ const PickerBox = styled.div`
 const CalendarIcon = styled.i`
   width: 20px;
   height: 20px;
-  background-image: url("/calendar.svg");
+  background-image: url(${import.meta.env.BASE_URL + "/calendar.svg"});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
