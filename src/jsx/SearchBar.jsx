@@ -37,7 +37,7 @@ const Input = styled.input`
 function SearchBar({ value, onChange }) {
   return (
     <SearchBarWrap>
-      <Icon src="/search.svg" />
+      <Icon src={import.meta.env.BASE_URL + "/search.svg"} />
       <Input
         type="text"
         placeholder="프로젝트를 검색해보세요"

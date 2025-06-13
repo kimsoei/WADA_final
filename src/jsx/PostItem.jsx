@@ -188,7 +188,7 @@ function PostItem({
             <AuthorName>{author || "작성자"}</AuthorName>
           </AuthorWrap>
           <ViewCountWrap>
-            <ViewImg src="/view.svg" />
+            <ViewImg src={import.meta.env.BASE_URL + "/view.svg"} />
             <ViewCountNum>{viewCount}</ViewCountNum>
           </ViewCountWrap>
         </AuthorInfo>

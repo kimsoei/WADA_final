@@ -128,8 +128,11 @@ function ProfileCard({ profileData }) {
     기획자: "/productmanagerProfile.svg",
   };
 
-  const TaskIcon = TASK_ICONS[profileData.task] || "/designer.svg";
-  const ProfileIcon = PROFILE_ICONS[profileData.task] || "/designerProfile.svg";
+  const TaskIcon =
+    TASK_ICONS[profileData.task] || import.meta.env.BASE_URL + "/designer.svg";
+  const ProfileIcon =
+    PROFILE_ICONS[profileData.task] ||
+    import.meta.env.BASE_URL + "/designerProfile.svg";
 
   console.log({ TaskIcon });
   console.log("task:", `"${profileData.task}"`);

@@ -76,7 +76,12 @@ export default function SelectBtnWrap({
       <BtnCon>
         <TitleWrap>
           <Title>{title}</Title>
-          {essential && <EssentialIcon src="/essential.svg" alt="필수" />}
+          {essential && (
+            <EssentialIcon
+              src={import.meta.env.BASE_URL + "/essential.svg"}
+              alt="필수"
+            />
+          )}
         </TitleWrap>
         {mode === "multi" && <SubText>{subtext}</SubText>}
 

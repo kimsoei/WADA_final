@@ -41,7 +41,7 @@ const IconBtn = styled.img`
   height: 20px;
 `;
 
-const DefaultImg = "/vite.svg";
+const DefaultImg = import.meta.env.BASE_URL + "/vite.svg";
 
 function ApplicantListItem({ imageUrl, name, onClick, type = "default" }) {
   if (type === "not") {

@@ -17,7 +17,7 @@ const EmptyCon = styled.div`
 function EmptyPost() {
   return (
     <EmptyCon>
-      <img src="/second.svg"></img>
+      <img src={import.meta.env.BASE_URL + "/second.svg"}></img>
     </EmptyCon>
   );
 }

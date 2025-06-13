@@ -70,7 +70,6 @@ export default function MainPage() {
     fetchData();
   }, []);
 
-
   return (
     <>
       <Header type="default" badge={false} />
@@ -80,25 +79,31 @@ export default function MainPage() {
           <h1 className="TipTitle">프로젝트 팀원, 간단하게 구하자!</h1>
           <div className="TipWrap">
             <div className="TipItem">
-              <img src="/first.svg"></img>
+              <img src={import.meta.env.BASE_URL + "/first.svg"}></img>
               <h5 className="TipSubText">
                 프로젝트
                 <br />
                 정보등록
               </h5>
             </div>
-            <img className="TipImg" src="/nextImg.svg"></img>
+            <img
+              className="TipImg"
+              src={import.meta.env.BASE_URL + "/nextImg.svg"}
+            ></img>
             <div className="TipItem">
-              <img src="/second.svg"></img>
+              <img src={import.meta.env.BASE_URL + "/second.svg"}></img>
               <h5 className="TipSubText">
                 모집글
                 <br />
                 작성
               </h5>
             </div>
-            <img className="TipImg" src="/nextImg.svg"></img>
+            <img
+              className="TipImg"
+              src={import.meta.env.BASE_URL + "/nextImg.svg"}
+            ></img>
             <div className="TipItem">
-              <img src="/three.svg"></img>
+              <img src={import.meta.env.BASE_URL + "/three.svg"}></img>
               <h5 className="TipSubText">
                 지원자
                 <br />
@@ -115,7 +120,10 @@ export default function MainPage() {
           <h2 className="ConTitle">파티 모집</h2>
           <div className="ConBtn" onClick={() => navigate("/post")}>
             <span className="allView">전체보기</span>
-            <img className="main_arrow" src="/arrow_right.svg" />
+            <img
+              className="main_arrow"
+              src={import.meta.env.BASE_URL + "/arrow_right.svg"}
+            />
           </div>
         </div>
 

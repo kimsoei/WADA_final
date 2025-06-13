@@ -49,7 +49,7 @@ function Header({ type = "default", badge = false, title = "", backTo = "/" }) {
   if (type === "default") {
     return (
       <HeaderWrap>
-        <LogoImg src="/logo.svg" />
+        <LogoImg src={import.meta.env.BASE_URL + "/logo.svg"} />
         <IconImg src={badge ? noticeActiveIcon : noticeIcon} />
       </HeaderWrap>
     );

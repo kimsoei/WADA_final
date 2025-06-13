@@ -57,32 +57,32 @@ export default function PostPage() {
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [search, setSearch] = useState("");
 
-useEffect(() => {
-  const fetchData = async () => {
-    const profileSnap = await db.collection("profile").get();
-    const postSnap = await db.collection("post").get();
+  useEffect(() => {
+    const fetchData = async () => {
+      const profileSnap = await db.collection("profile").get();
+      const postSnap = await db.collection("post").get();
 
-    const profileMap = {};
-    profileSnap.forEach((doc) => {
-      const data = doc.data();
-      if (data.name) profileMap[data.name] = data.imageUrl;
-    });
-
-    const result = [];
-    postSnap.forEach((doc) => {
-      const data = doc.data();
-      result.push({
-        id: doc.id,
-        ...data,
-        authorImageUrl: profileMap[data.author] || null,
+      const profileMap = {};
+      profileSnap.forEach((doc) => {
+        const data = doc.data();
+        if (data.name) profileMap[data.name] = data.imageUrl;
       });
-    });
 
-    setPosts(result);
-  };
+      const result = [];
+      postSnap.forEach((doc) => {
+        const data = doc.data();
+        result.push({
+          id: doc.id,
+          ...data,
+          authorImageUrl: profileMap[data.author] || null,
+        });
+      });
 
-  fetchData();
-}, []);
+      setPosts(result);
+    };
+
+    fetchData();
+  }, []);
 
   const filteredPosts = posts.filter((post) => {
     const CategoryPosts =
@@ -111,7 +111,7 @@ useEffect(() => {
       </PostContentWrap>
 
       <FloatingBtn onClick={() => navigate("/post/write")}>
-        <FloatingImg src="/pencil.svg" />
+        <FloatingImg src={import.meta.env.BASE_URL + "/pencil.svg"} />
       </FloatingBtn>
       <BottomNavigation />
     </>

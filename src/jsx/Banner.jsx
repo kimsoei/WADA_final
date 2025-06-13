@@ -53,17 +53,17 @@ const Icon = styled.img`
 `;
 
 function Banner({ type = "dark", onClick }) {
-  const ArrowIcon = "/arrow_right.svg";
+  const ArrowIcon = import.meta.env.BASE_URL + "/arrow_right.svg";
   const defaultBanner = type === "dark";
 
   const bannerData = defaultBanner
     ? {
-        icon: "/BannerPencil.svg",
+        icon: import.meta.env.BASE_URL + "/BannerPencil.svg",
         title: "프로필 카드를 추가해볼까요?",
         description: "프로필을 작성해 나를 소개해 보세요",
       }
     : {
-        icon: "/BannerLady.svg",
+        icon: import.meta.env.BASE_URL + "/BannerLady.svg",
         title: "함께 할 파티원을 찾고 있나요?",
         description: "지금 모집글을 작성하여 찾아보세요",
       };

@@ -136,7 +136,12 @@ function InputDropdown({
     <DropdownWrap>
       <TitleWrap>
         {title}
-        {isEssential && <EssentialIcon src="/essential.svg" alt="필수 입력" />}
+        {isEssential && (
+          <EssentialIcon
+            src={import.meta.env.BASE_URL + "/essential.svg"}
+            alt="필수 입력"
+          />
+        )}
       </TitleWrap>
 
       <MotionDropdownHeader
@@ -147,7 +152,11 @@ function InputDropdown({
         {...(hasError ? errorShake : {})}
       >
         {selected || placeholder}
-        <StyledArrow src="/arrow_bottom.svg" open={open} alt="화살표" />
+        <StyledArrow
+          src={import.meta.env.BASE_URL + "/arrow_bottom.svg"}
+          open={open}
+          alt="화살표"
+        />
       </MotionDropdownHeader>
 
       <AnimatePresence>
